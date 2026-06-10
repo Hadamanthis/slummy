@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://cwrrp3ird0p1"]
+
+[ext_resource type="PackedScene" uid="uid://bkujtylea3x2" path="res://scenes/arena.tscn" id="1_0srwa"]
+[ext_resource type="PackedScene" uid="uid://stloe47cargs" path="res://scenes/spike.tscn" id="2_v5uil"]
+[ext_resource type="PackedScene" uid="uid://bg7rycuamsah" path="res://scenes/fruit.tscn" id="3_5722l"]
+
+[node name="Level2" type="Node2D" unique_id=796652752]
+
+[node name="Arena" parent="." unique_id=1131801412 instance=ExtResource("1_0srwa")]
+position = Vector2(447, 253)
+
+[node name="Spike" parent="." unique_id=651547768 instance=ExtResource("2_v5uil")]
+position = Vector2(21, 254)
+scale = Vector2(1, 14.920002)
+
+[node name="SlimeStart" type="Marker2D" parent="." unique_id=1728550588]
+position = Vector2(263, 110)
+
+[node name="Fruits" type="Node2D" parent="." unique_id=663480115]
+
+[node name="Fruit" parent="Fruits" unique_id=1137598225 instance=ExtResource("3_5722l")]
+position = Vector2(83, 113)
+
+[node name="Fruit2" parent="Fruits" unique_id=944591859 instance=ExtResource("3_5722l")]
+position = Vector2(215, 310)
+
+[node name="Fruit3" parent="Fruits" unique_id=44072092 instance=ExtResource("3_5722l")]
+position = Vector2(82, 446)

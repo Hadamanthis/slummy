@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://s4y0fd6kr5g7"]
+
+[ext_resource type="Texture2D" uid="uid://dcf2yxxcwbx5s" path="res://icon.svg" id="1_371uh"]
+[ext_resource type="Script" uid="uid://dr7t2rnkky315" path="res://scripts/slime.gd" id="1_p2gj0"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_srws1"]
+
+[node name="Slime" type="CharacterBody2D" unique_id=177085480]
+script = ExtResource("1_p2gj0")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1008625166]
+scale = Vector2(0.16254441, 0.16869092)
+texture = ExtResource("1_371uh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1807762981]
+shape = SubResource("CircleShape2D_srws1")
+
+[node name="Line2D" type="Line2D" parent="." unique_id=642533357]
+width = 2.0

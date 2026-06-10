@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://d10pbgik6rxnd"]
+
+[ext_resource type="PackedScene" uid="uid://bkujtylea3x2" path="res://scenes/arena.tscn" id="1_rus8k"]
+[ext_resource type="PackedScene" uid="uid://stloe47cargs" path="res://scenes/spike.tscn" id="2_5xbjy"]
+[ext_resource type="PackedScene" uid="uid://bg7rycuamsah" path="res://scenes/fruit.tscn" id="3_4nkto"]
+
+[node name="Level1" type="Node2D" unique_id=796652752]
+
+[node name="Arena" parent="." unique_id=1131801412 instance=ExtResource("1_rus8k")]
+position = Vector2(447, 253)
+
+[node name="Spike" parent="." unique_id=651547768 instance=ExtResource("2_5xbjy")]
+position = Vector2(17, 238)
+
+[node name="SlimeStart" type="Marker2D" parent="." unique_id=1728550588]
+position = Vector2(439, 246)
+
+[node name="Fruits" type="Node2D" parent="." unique_id=533108534]
+
+[node name="Fruit" parent="Fruits" unique_id=1137598225 instance=ExtResource("3_4nkto")]
+position = Vector2(248, 194)
+
+[node name="Fruit2" parent="Fruits" unique_id=1057133215 instance=ExtResource("3_4nkto")]
+position = Vector2(641, 253)

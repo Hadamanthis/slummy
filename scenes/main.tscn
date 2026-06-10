@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://b17518cwhn446"]
+
+[ext_resource type="Script" uid="uid://qxaf8p76iy13" path="res://scripts/main.gd" id="1_jyhfs"]
+[ext_resource type="PackedScene" uid="uid://s4y0fd6kr5g7" path="res://scenes/slime.tscn" id="1_o5qli"]
+[ext_resource type="PackedScene" uid="uid://d10pbgik6rxnd" path="res://scenes/levels/level_1.tscn" id="2_jyhfs"]
+[ext_resource type="PackedScene" uid="uid://cwrrp3ird0p1" path="res://scenes/levels/level_2.tscn" id="3_tbgi4"]
+
+[node name="Main" type="Node2D" unique_id=1430134489]
+script = ExtResource("1_jyhfs")
+levels = Array[PackedScene]([ExtResource("2_jyhfs"), ExtResource("3_tbgi4")])
+
+[node name="Slime" parent="." unique_id=177085480 instance=ExtResource("1_o5qli")]
+position = Vector2(568, 326)
+
+[node name="Level" type="Node2D" parent="." unique_id=52529911]
