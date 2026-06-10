@@ -59,7 +59,7 @@ func _on_fruit_collected() -> void:
 	
 	_go_to_next_level()
 
-func _has_remaining_fruits():
+func _has_remaining_fruits() -> bool:
 	var fruits: Node2D = current_level.get_node("Fruits")
 	
 	for fruit in fruits.get_children():
@@ -67,8 +67,6 @@ func _has_remaining_fruits():
 			return true
 	
 	return false
-
-
 
 func _on_player_hit() -> void:
 	if state == State.GAME_OVER:
