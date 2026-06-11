@@ -10,12 +10,18 @@ enum State {
 @onready var slime: CharacterBody2D = $Slime
 @onready var level: Node2D = $Level
 
-var current_level_index := 0
-var current_level: Node2D
-var score := 0
 var state := State.PLAYING
 
+var current_level_index := 0
+var current_level: Level
+var launches_left: int
+
+var score := 0
+var fruits_collected_this_launch := 0
+
 func _ready() -> void:
+	slime.launched.connect(_on_slime_launched)
+	slime.stopped.connect(_on_slime_stopped)
 	_load_current_level()
 
 func _load_current_level() -> void:
@@ -24,6 +30,7 @@ func _load_current_level() -> void:
 	
 	current_level = levels[current_level_index].instantiate()
 	level.add_child(current_level)
+	launches_left = current_level.max_launches
 	
 	var slime_start: Marker2D = current_level.get_node("SlimeStart")
 	slime.global_position = slime_start.global_position
@@ -49,15 +56,11 @@ func _on_fruit_collected() -> void:
 	if state == State.GAME_OVER:
 		return
 	
-	score += 1
-	print("Score: ", score)
-	
-	await get_tree().process_frame # Espera passar um frame
-	
-	if _has_remaining_fruits():
-		return
-	
-	_go_to_next_level()
+	fruits_collected_this_launch += 1
+
+func calculate_score() -> void:
+	score += fruits_collected_this_launch ** 2
+	print("score:", score)
 
 func _has_remaining_fruits() -> bool:
 	var fruits: Node2D = current_level.get_node("Fruits")
@@ -79,3 +82,25 @@ func _on_player_hit() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept") and state == State.GAME_OVER:
 		get_tree().reload_current_scene()
+
+func _on_slime_launched() -> void:
+	fruits_collected_this_launch = 0
+
+func _on_slime_stopped() -> void:
+	calculate_score()
+
+	launches_left -= 1
+	print("launches left:", launches_left)
+
+	await get_tree().process_frame # Espera passar um frame
+
+	# Condição de derrota: Ainda há frutas mas não tem mais lançamentos
+	if not _has_remaining_fruits():
+		_go_to_next_level()
+		return
+
+	if launches_left <= 0:
+		state = State.GAME_OVER
+		slime.set_control_enabled(false)
+		print("Game Over - No launches left")
+		return

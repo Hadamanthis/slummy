@@ -513,3 +513,64 @@ await get_tree().process_frame
 
 Isso evita contar objetos que ja foram marcados para remocao, mas ainda nao
 sumiram completamente da arvore de nos.
+
+## 33. Pontuacao muda o comportamento do jogador
+
+Pontuacao nao e apenas recompensa; ela ensina o jogador o que o jogo considera
+uma boa jogada.
+
+Se cada fruta vale sempre `+1`, o jogador tende a buscar a opcao mais segura:
+coletar uma fruta por vez.
+
+Se a pontuacao e calculada no fim do lancamento, como:
+
+```text
+pontos = frutas_coletadas_no_lancamento ** 2
+```
+
+o jogo passa a incentivar planejamento, ricochete e controle de forca.
+
+Esse tipo de regra pode fortalecer o core loop quando o jogador entende a
+relacao entre risco e recompensa. Mas tambem pode atrapalhar se:
+
+- a regra nao for visivel;
+- as fases nao permitirem escolhas interessantes;
+- o bonus for tao forte que so exista uma estrategia correta;
+- o jogador sentir que perdeu pontos por uma regra escondida.
+
+Principio: antes de polir uma regra de pontuacao, testar se ela cria decisoes
+melhores. Primeiro validamos a vontade de tentar de novo; depois criamos UI,
+efeitos e explicacoes.
+
+## 34. Limitacao transforma acao em decisao
+
+Uma mecanica pode ser gostosa de usar e ainda assim nao sustentar um jogo.
+
+Quando o jogador pode tentar infinitamente, errar sem custo e pontuar sem
+consequencia, a experiencia vira brincadeira livre. Isso pode ser divertido por
+alguns minutos, mas geralmente nao cria vontade forte de continuar.
+
+Limitacoes simples criam pressao e significado:
+
+- poucos lancamentos;
+- pouco tempo;
+- poucos recursos;
+- risco de perder progresso;
+- objetivo claro antes da falha.
+
+No caso do slime, limitar lancamentos por fase muda a pergunta do jogador:
+
+```text
+"Consigo pegar a fruta?"
+```
+
+para:
+
+```text
+"Consigo pegar todas as frutas com esses lancamentos?"
+```
+
+Essa segunda pergunta e mais forte porque cria planejamento, risco e tentativa
+de melhorar. O importante e a limitacao parecer justa: o jogador precisa sentir
+que perdeu por decisao, mira ou forca, nao por uma regra escondida ou fase mal
+posicionada.

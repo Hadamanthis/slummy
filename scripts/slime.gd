@@ -1,5 +1,8 @@
 extends CharacterBody2D
 
+signal launched
+signal stopped
+
 enum State {
 	IDLE,
 	AIMING,
@@ -40,6 +43,7 @@ func _physics_process(delta: float) -> void:
 	if velocity.length() <= min_stop_speed:
 		velocity = Vector2.ZERO
 		state = State.IDLE
+		stopped.emit()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if control_enabled == false:
@@ -93,6 +97,7 @@ func _try_launch() -> void:
 	
 	velocity = launch_vector.normalized() * force * launch_force_multiplier
 	state = State.MOVING
+	launched.emit()
 	
 	aim_line.visible = false
 	aim_line.clear_points()

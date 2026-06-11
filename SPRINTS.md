@@ -7,7 +7,8 @@ em polimento, conteudo extra ou sistemas grandes.
 ## Progresso atual
 
 Ultima atualizacao: prototipo jogavel com movimento, ricochete, coleta,
-perigo, restart, fases manuais e suporte a multiplas frutas por fase.
+perigo, restart, fases manuais, suporte a multiplas frutas por fase e
+pontuacao calculada por lancamento.
 
 Concluido:
 
@@ -16,20 +17,30 @@ Concluido:
 - Sprint 3: coleta de fruta com sinal;
 - Sprint 4: perigo, game over e restart;
 - Sprint 5: carregamento de fases manuais;
-- Sprint 6, parte 1: multiplas frutas por fase e troca de fase apos coletar todas.
+- Sprint 6, parte 1: multiplas frutas por fase e troca de fase apos coletar todas;
+- Sprint 6, parte 2: contar frutas coletadas no mesmo lancamento e pontuar no
+  fim do lancamento.
 
 Em andamento:
 
-- Sprint 6, parte 2: contar frutas coletadas no mesmo lancamento e aplicar
-  bonus simples.
+- Sprint 7: adicionar limite de lancamentos por fase para criar pressao,
+  objetivo claro e vontade de tentar de novo.
 
 Decisoes registradas:
 
-- fases ficam em `res://levels/`;
+- fases ficam em `res://scenes/levels/`;
 - `Main` controla fluxo da partida e carregamento de fases;
+- cada cena de fase usa o script comum `scripts/level.gd`;
+- `Level.max_launches` guarda quantos lancamentos aquela fase permite;
 - `Slime` fica fora das cenas de fase e e reposicionado por `SlimeStart`;
 - cada fase usa um container `Fruits` para permitir multiplas frutas;
-- frutas e espinhos emitem sinais; `Main` decide pontuacao, troca de fase e game over.
+- frutas e espinhos emitem sinais; `Main` decide pontuacao, troca de fase e game over;
+- `Slime` emite sinais de lancamento e parada para o `Main` conseguir medir
+  quantas frutas foram coletadas em um mesmo lancamento;
+- a pontuacao atual e calculada no fim do lancamento como
+  `fruits_collected_this_launch ** 2`;
+- a proxima hipotese de core loop e tratar cada fase como um desafio com
+  quantidade limitada de lancamentos.
 
 ## Decisoes atuais de design
 
@@ -77,15 +88,21 @@ O design das primeiras fases deve testar:
 
 ### Bonus por multiplas frutas
 
-Coletar varias frutas em um unico lancamento e uma boa promessa de juice e
-habilidade, mas nao entra na primeira sprint.
+Coletar varias frutas em um unico lancamento e uma boa promessa de habilidade,
+mas a regra precisa ser testada como parte do core loop, nao apenas como bonus
+decorativo.
 
-Guardar como evolucao natural:
+A regra atual usa pontuacao quadratica por lancamento:
 
-- 1 fruta: coleta normal;
-- 2 frutas no mesmo lancamento: bonus simples;
-- 3+ frutas no mesmo lancamento: efeito visual mais forte;
-- texto curto como "Combo" ou "Perfeito", se isso nao poluir a tela.
+- 0 frutas no lancamento: 0 ponto;
+- 1 fruta no lancamento: 1 ponto;
+- 2 frutas no lancamento: 4 pontos;
+- 3 frutas no lancamento: 9 pontos.
+
+Essa regra muda o incentivo: o jogador deve procurar lancamentos melhores, nao
+apenas coletar uma fruta por vez. Se isso deixar o jogo mais interessante, ela
+vira parte central do design. Se parecer confusa ou forte demais, voltar para
+`+1 por fruta` com bonus simples continua sendo uma alternativa segura.
 
 ### Objetos especiais
 
@@ -359,18 +376,20 @@ Criar commit quando as quatro fases forem jogaveis.
 Status: parcialmente concluida. O projeto ja carrega fases manuais e troca de
 fase, mas ainda nao foram criadas quatro fases com intencoes diferentes.
 
-## Sprint 6 - Multiplas frutas e bonus simples
+## Sprint 6 - Multiplas frutas e pontuacao por lancamento
 
 Objetivo:
 
-Testar se coletar varias frutas em um lancamento aumenta a diversao.
+Testar se coletar varias frutas em um lancamento aumenta a diversao e deixa o
+core loop mais interessante.
 
 Entregas:
 
 - fase com duas ou tres frutas;
 - contador de frutas coletadas durante o mesmo lancamento;
-- bonus simples ao coletar 2+ frutas antes de parar;
-- feedback visual minimo de bonus.
+- pontuacao calculada no fim do lancamento;
+- troca de fase apos todas as frutas serem coletadas;
+- fases ajustadas para permitir lancamentos ruins, bons e excelentes.
 
 Fora da sprint:
 
@@ -382,23 +401,77 @@ Fora da sprint:
 Criterio de conclusao:
 
 O jogador deve sentir vontade de planejar um lancamento melhor, nao apenas
-coletar uma fruta por vez.
+coletar uma fruta por vez. A regra precisa ser compreensivel mesmo usando
+apenas `print` como feedback temporario.
 
 Teste manual:
 
-- coletar 1 fruta da ponto normal;
-- coletar 2 frutas no mesmo lancamento da bonus;
-- bonus reinicia quando o slime para;
-- bonus nao dispara duas vezes pelo mesmo conjunto.
+- coletar 1 fruta em um lancamento da 1 ponto ao parar;
+- coletar 2 frutas no mesmo lancamento da 4 pontos ao parar;
+- coletar 3 frutas no mesmo lancamento da 9 pontos ao parar;
+- coletar 1 fruta, parar, depois coletar outra nao gera pontuacao de combo;
+- fase so troca depois que o slime para e todas as frutas acabaram.
 
 Checkpoint recomendado:
 
-Criar commit quando o bonus simples estiver funcionando.
+Criar commit quando a pontuacao por lancamento estiver testada manualmente em
+pelo menos duas fases.
 
-Status: em andamento. O suporte a multiplas frutas por fase esta funcionando;
-falta o bonus por coletar varias frutas no mesmo lancamento.
+Status: em andamento. A base tecnica da pontuacao por lancamento existe; falta
+testar se a regra melhora o core loop e ajustar o desenho das fases para ela.
 
-## Sprint 7 - Ajuste de feel sem polimento pesado
+## Sprint 7 - Teste de core loop
+
+Objetivo:
+
+Descobrir se o jogo fica interessante quando cada fase tem uma limitacao clara:
+coletar todas as frutas antes de acabar a quantidade de lancamentos.
+
+Entregas:
+
+- definir um numero simples de lancamentos por fase;
+- diminuir os lancamentos restantes quando o slime e lancado;
+- vencer a fase ao coletar todas as frutas;
+- falhar a fase quando os lancamentos acabam e ainda existem frutas;
+- reiniciar a fase ou a partida apos falha;
+- revisar `Level_01` para ser possivel passar com folga;
+- revisar `Level_02` para ter pelo menos uma rota melhor usando ricochete;
+- criar uma pequena tabela de teste manual com 3 perguntas:
+  - "entendi o que tentar?";
+  - "quis tentar de novo?";
+  - "o erro pareceu minha culpa?";
+- decidir se a pontuacao quadratica ainda ajuda ou se o limite de lancamentos
+  ja e motivacao suficiente.
+
+Fora da sprint:
+
+- criar muitas fases;
+- adicionar objetos especiais;
+- adicionar sons;
+- adicionar particulas;
+- criar UI final de combo.
+- criar sistema de estrelas, ranking ou recorde.
+
+Criterio de conclusao:
+
+Depois de 5 a 10 minutos de teste, o jogo deve gerar pelo menos uma destas
+vontades: passar a fase, passar com menos lancamentos ou tentar uma rota melhor.
+
+Teste manual:
+
+- `Level_01`: deve ser possivel vencer sem ricochete complexo;
+- `Level_01`: deve ficar claro quando um lancamento foi desperdicado;
+- `Level_02`: deve incentivar pelo menos um ricochete;
+- quando os lancamentos acabam com frutas restantes, o jogo deve falhar;
+- quando todas as frutas acabam, o jogo deve avancar de fase;
+- anotar se o limite de lancamentos criou tensao boa ou frustracao.
+
+Checkpoint recomendado:
+
+Criar commit quando o limite de lancamentos estiver testado em pelo menos duas
+fases e a decisao sobre manter ou simplificar a pontuacao estiver tomada.
+
+## Sprint 8 - Ajuste de feel sem polimento pesado
 
 Objetivo:
 
@@ -438,7 +511,7 @@ Checkpoint recomendado:
 
 Criar commit quando os parametros principais estiverem escolhidos.
 
-## Sprint 8 - Primeiro pacote de juice
+## Sprint 9 - Primeiro pacote de juice
 
 Objetivo:
 

@@ -1,10 +1,13 @@
 [gd_scene format=3 uid="uid://cwrrp3ird0p1"]
 
 [ext_resource type="PackedScene" uid="uid://bkujtylea3x2" path="res://scenes/arena.tscn" id="1_0srwa"]
+[ext_resource type="Script" uid="uid://b2oe8co0m4hn3" path="res://scripts/level.gd" id="1_fiq81"]
 [ext_resource type="PackedScene" uid="uid://stloe47cargs" path="res://scenes/spike.tscn" id="2_v5uil"]
 [ext_resource type="PackedScene" uid="uid://bg7rycuamsah" path="res://scenes/fruit.tscn" id="3_5722l"]
 
 [node name="Level2" type="Node2D" unique_id=796652752]
+script = ExtResource("1_fiq81")
+max_launches = 4
 
 [node name="Arena" parent="." unique_id=1131801412 instance=ExtResource("1_0srwa")]
 position = Vector2(447, 253)

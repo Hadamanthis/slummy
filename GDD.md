@@ -24,16 +24,22 @@ A sensação desejada é parecida com brincar com um estilingue: puxar, mirar, s
 4. O jogador solta.
 5. O slime é lançado pela arena.
 6. O slime quica, coleta fruta ou bate em perigo.
-7. Quando o slime perde velocidade, o jogador pode lançar de novo.
-8. A cada fruta coletada, a pontuação sobe e uma nova fruta aparece.
-9. Com o tempo, o jogo adiciona mais perigo ou aumenta a dificuldade.
-10. Se o slime encostar em um espinho, a partida acaba.
+7. Quando o slime perde velocidade, o lançamento termina.
+8. A pontuação do lançamento é calculada com base em quantas frutas foram coletadas antes do slime parar.
+9. O jogador precisa coletar todas as frutas antes de acabar o limite de lançamentos da fase.
+10. Se todas as frutas da fase foram coletadas, o jogo avança para a próxima fase manual.
+11. Se os lançamentos acabam com frutas restantes, a fase falha.
+12. Se o slime encostar em um espinho, a partida acaba.
+
+Nota de protótipo atual:
+
+O projeto está testando uma versão mais tática/puzzle do core loop, com fases manuais, várias frutas por fase e limite de lançamentos. A hipótese atual é que a limitação de tentativas cria uma motivação mais forte do que apenas acumular pontos.
 
 ## 4. Objetivo do jogador
 
-O objetivo principal é **coletar o máximo de frutas possível antes de morrer**.
+O objetivo principal em teste é **coletar todas as frutas da fase usando poucos lançamentos e sem tocar nos espinhos**.
 
-O jogo deve funcionar como score attack: partidas curtas, tentativa rápida, vontade de jogar de novo para bater o próprio recorde.
+O jogo pode evoluir para score attack depois, mas o protótipo atual está mais próximo de um puzzle arcade de fases curtas: tentativa rápida, erro compreensível e vontade de tentar uma rota melhor.
 
 ## 5. Mecânica principal
 
@@ -149,17 +155,43 @@ Na primeira versão, basta um único espinho fixo ou aleatório.
 
 ### 7.3 Pontuação
 
-Pontuação básica:
+Pontuação básica planejada inicialmente:
 
 * +1 por fruta coletada.
 
-Pontuação extra opcional:
+Regra em teste no protótipo atual:
+
+* contar quantas frutas foram coletadas durante o mesmo lançamento;
+* calcular a pontuação quando o slime parar;
+* usar `frutas_coletadas_no_lancamento ** 2`.
+
+Exemplos:
+
+* 1 fruta no lançamento: 1 ponto;
+* 2 frutas no lançamento: 4 pontos;
+* 3 frutas no lançamento: 9 pontos.
+
+Motivo de design:
+
+Essa regra recompensa planejamento, ricochete e controle de força. Ela também pode deixar o jogo menos interessante se o jogador não entender a pontuação ou se as fases não criarem escolhas claras. Por isso, ainda é uma hipótese de protótipo, não uma regra final.
+
+Limitação principal em teste:
+
+* cada fase tem um número máximo de lançamentos;
+* cada lançamento consome uma tentativa;
+* coletar todas as frutas vence a fase;
+* acabar os lançamentos com frutas restantes falha a fase.
+
+Motivo de design:
+
+Pontuação sozinha não cria pressão se o jogador pode tentar infinitamente. O limite de lançamentos transforma cada fase em um problema pequeno: escolher entre um lançamento seguro, um lançamento eficiente ou um lançamento arriscado.
+
+Pontuação extra opcional futura:
 
 * combo por coletar frutas em poucos lançamentos;
-* bônus se coletar fruta em um único lançamento;
 * bônus por sequência sem bater em parede.
 
-Para o MVP, usar apenas **+1 por fruta**.
+Para o MVP, manter a regra que deixar o core loop mais claro e divertido nos testes manuais.
 
 ### 7.4 Game over
 
@@ -386,10 +418,23 @@ Responsável por:
 
 * iniciar partida;
 * controlar pontuação;
-* gerar frutas;
-* gerar espinhos;
+* carregar fases manuais;
+* conectar sinais de frutas, espinhos e slime;
 * detectar game over;
 * reiniciar jogo.
+
+### Level.tscn
+
+Cada fase manual usa o script comum `scripts/level.gd`.
+
+Responsável por guardar dados configuráveis da fase:
+
+* quantidade máxima de lançamentos;
+* posição inicial do slime por meio de `SlimeStart`;
+* composição manual de frutas, espinhos e arena.
+
+A fase guarda dados e composição. O `Main` continua decidindo regra de jogo,
+vitória, derrota, pontuação e troca de fase.
 
 ### Slime.tscn
 
@@ -458,8 +503,6 @@ Responsável por:
 ```text
 launched
 stopped
-hit_spike
-collected_fruit
 ```
 
 ### Fruit
@@ -473,8 +516,8 @@ collected
 Recebe sinais e decide:
 
 * somar ponto;
-* spawnar nova fruta;
-* aumentar dificuldade;
+* calcular pontuação quando o slime para;
+* trocar de fase quando todas as frutas forem coletadas;
 * encerrar partida.
 
 ## 17. Variáveis principais
