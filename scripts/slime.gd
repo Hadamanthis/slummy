@@ -1,3 +1,4 @@
+class_name Slime
 extends CharacterBody2D
 
 signal launched

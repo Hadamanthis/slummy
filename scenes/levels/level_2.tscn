@@ -7,14 +7,9 @@
 
 [node name="Level2" type="Node2D" unique_id=796652752]
 script = ExtResource("1_fiq81")
-max_launches = 4
 
 [node name="Arena" parent="." unique_id=1131801412 instance=ExtResource("1_0srwa")]
 position = Vector2(447, 253)
-
-[node name="Spike" parent="." unique_id=651547768 instance=ExtResource("2_v5uil")]
-position = Vector2(21, 254)
-scale = Vector2(1, 14.920002)
 
 [node name="SlimeStart" type="Marker2D" parent="." unique_id=1728550588]
 position = Vector2(263, 110)
@@ -29,3 +24,9 @@ position = Vector2(215, 310)
 
 [node name="Fruit3" parent="Fruits" unique_id=44072092 instance=ExtResource("3_5722l")]
 position = Vector2(82, 446)
+
+[node name="Spikes" type="Node2D" parent="." unique_id=1644252085]
+
+[node name="Spike" parent="Spikes" unique_id=651547768 instance=ExtResource("2_v5uil")]
+position = Vector2(21, 254)
+scale = Vector2(1, 14.920002)

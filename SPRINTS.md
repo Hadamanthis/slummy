@@ -471,7 +471,95 @@ Checkpoint recomendado:
 Criar commit quando o limite de lancamentos estiver testado em pelo menos duas
 fases e a decisao sobre manter ou simplificar a pontuacao estiver tomada.
 
-## Sprint 8 - Ajuste de feel sem polimento pesado
+## Sprint 8 - Robustez do fluxo de fases
+
+Objetivo:
+
+Deixar o ciclo de fase confiavel antes de adicionar mais conteudo ou polimento.
+O jogador deve conseguir falhar, reiniciar, vencer e avancar sem estados
+visuais presos, sinais antigos ou dependencias frageis entre fases.
+
+Entregas:
+
+- corrigir reinicio de fase apos `STAGE_FAILED`;
+- garantir que mensagens da HUD somem ao recarregar a fase;
+- garantir que sinais de fases antigas nao disparem depois do restart;
+- manter `Main` como dono do fluxo de fase;
+- manter `HUD` apenas refletindo estado e mensagens;
+- testar falha por espinho e falha por falta de lancamentos;
+- testar avanco de fase apos `STAGE_CLEARED`;
+- remover variaveis, comentarios e funcoes que ficaram sem uso.
+
+Fora da sprint:
+
+- ajustar feel fino;
+- adicionar sons;
+- adicionar particulas;
+- criar tela inicial;
+- criar selecao de fases;
+- adicionar objetos especiais.
+
+Criterio de conclusao:
+
+O jogador consegue repetir uma fase falhada com um unico comando, avancar uma
+fase concluida com um unico comando, e nenhuma mensagem antiga permanece na
+tela depois que uma nova fase comeca.
+
+Teste manual:
+
+- falhar por espinho e apertar espaco deve reiniciar a mesma fase;
+- falhar por lancamentos e apertar espaco deve reiniciar a mesma fase;
+- concluir fase e apertar espaco deve carregar a proxima fase;
+- ao reiniciar ou avancar, a mensagem central deve sumir;
+- o slime deve voltar para o `SlimeStart` correto;
+- a HUD deve mostrar fase, frutas, score e lancamentos corretos.
+
+Checkpoint recomendado:
+
+Criar commit quando o fluxo falhar/reiniciar/vencer/avancar estiver confiavel.
+
+## Sprint 9 - Mais fases manuais com intencao
+
+Objetivo:
+
+Criar um pequeno conjunto de fases que revele se o core loop precisa de novos
+elementos, mais leitura visual ou mudancas de regra.
+
+Entregas:
+
+- revisar `Level_01`, `Level_02` e `Level_03` com uma intencao clara;
+- criar pelo menos uma quarta fase manual;
+- cada fase deve testar uma pergunta diferente de design;
+- documentar a intencao de cada fase em uma tabela simples;
+- evitar adicionar objetos especiais antes de saber qual problema eles resolvem.
+
+Fora da sprint:
+
+- polimento visual pesado;
+- ajuste fino de parametros;
+- sons;
+- particulas;
+- sistema de estrelas;
+- selecao completa de fases.
+
+Criterio de conclusao:
+
+As fases devem expor se o jogo precisa de mais obstaculos, melhor feedback,
+melhor UI ou apenas melhor desenho de arena.
+
+Teste manual:
+
+- cada fase deve ter uma rota esperada;
+- cada fase deve ter pelo menos um erro comum observavel;
+- nenhuma fase deve depender de sorte;
+- o jogador deve entender por que falhou.
+
+Checkpoint recomendado:
+
+Criar commit quando houver um pequeno pacote de fases manuais jogaveis e com
+intencao clara.
+
+## Sprint 10 - Ajuste de feel sem polimento pesado
 
 Objetivo:
 
@@ -511,7 +599,7 @@ Checkpoint recomendado:
 
 Criar commit quando os parametros principais estiverem escolhidos.
 
-## Sprint 9 - Primeiro pacote de juice
+## Sprint 11 - Primeiro pacote de juice
 
 Objetivo:
 

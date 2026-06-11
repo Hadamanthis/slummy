@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://ebfbopupedrl"]
+
+[ext_resource type="Script" uid="uid://b2oe8co0m4hn3" path="res://scripts/level.gd" id="1_0qepi"]
+[ext_resource type="PackedScene" uid="uid://bkujtylea3x2" path="res://scenes/arena.tscn" id="2_fmg3e"]
+[ext_resource type="PackedScene" uid="uid://stloe47cargs" path="res://scenes/spike.tscn" id="3_ftfob"]
+[ext_resource type="PackedScene" uid="uid://bg7rycuamsah" path="res://scenes/fruit.tscn" id="4_fkk1g"]
+
+[node name="Level3" type="Node2D" unique_id=796652752]
+script = ExtResource("1_0qepi")
+
+[node name="Arena" parent="." unique_id=1131801412 instance=ExtResource("2_fmg3e")]
+position = Vector2(452, 259)
+
+[node name="SlimeStart" type="Marker2D" parent="." unique_id=2128014812]
+position = Vector2(834, 54)
+
+[node name="Fruits" type="Node2D" parent="." unique_id=931428413]
+position = Vector2(452, 259)
+
+[node name="Fruit" parent="Fruits" unique_id=1137598225 instance=ExtResource("4_fkk1g")]
+position = Vector2(235, -203)
+
+[node name="Fruit2" parent="Fruits" unique_id=448157826 instance=ExtResource("4_fkk1g")]
+position = Vector2(61, -205)
+
+[node name="Fruit3" parent="Fruits" unique_id=412075131 instance=ExtResource("4_fkk1g")]
+position = Vector2(-86, -203)
+
+[node name="Fruit4" parent="Fruits" unique_id=1206852720 instance=ExtResource("4_fkk1g")]
+position = Vector2(-221, -24)
+
+[node name="Fruit5" parent="Fruits" unique_id=74756835 instance=ExtResource("4_fkk1g")]
+position = Vector2(-89, 126)
+
+[node name="Spikes" type="Node2D" parent="." unique_id=1893585255]
+
+[node name="Spike" parent="Spikes" unique_id=651547768 instance=ExtResource("3_ftfob")]
+position = Vector2(565, 104.99997)
+rotation = -1.5756272
+scale = Vector2(1, 20.319967)
