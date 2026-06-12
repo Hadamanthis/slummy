@@ -9,6 +9,6 @@ func _on_body_entered(body: Node2D) -> void:
 		return
 	
 	if body is Slime:
-		collected.emit()
 		is_collected = true
+		collected.emit()
 		queue_free()

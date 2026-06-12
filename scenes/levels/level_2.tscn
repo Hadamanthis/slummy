@@ -7,6 +7,7 @@
 
 [node name="Level2" type="Node2D" unique_id=796652752]
 script = ExtResource("1_fiq81")
+max_launches = 4
 
 [node name="Arena" parent="." unique_id=1131801412 instance=ExtResource("1_0srwa")]
 position = Vector2(447, 253)

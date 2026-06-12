@@ -668,3 +668,32 @@ funcao como `reset_for_level(start_position)` no jogador e funcoes menores na
 Regra pratica: quando o mesmo par de linhas aparece em varios lugares, como
 `set_control_enabled(false)` e `velocity = Vector2.ZERO`, provavelmente existe
 um conceito faltando no codigo.
+
+## 40. Evento fisico nao e automaticamente evento de gameplay
+
+`Area2D.body_entered` informa que um corpo entrou na area do ponto de vista da
+fisica. Isso e diferente de dizer que uma regra do jogo deve acontecer.
+
+Em transicoes como restart, troca de fase, reposicionamento do jogador ou
+reativacao de collision shapes, a engine pode emitir sinais de entrada porque o
+estado de sobreposicao mudou no servidor de fisica. Esse evento pode ser
+tecnicamente correto, mas errado para a regra do jogo.
+
+Por isso, perigos e coletaveis devem traduzir o evento fisico para uma regra de
+gameplay com guardas explicitas:
+
+- a fase atual ainda e a dona do evento?
+- a partida esta em `PLAYING`?
+- o jogador esta em um estado em que pode sofrer perigo ou coletar?
+
+Exemplo de regra melhor que reagir diretamente ao sinal:
+
+```gdscript
+if not slime.can_hit_hazard():
+	return
+```
+
+Esse padrao evita que `body_entered` durante reload, reativacao ou
+reposicionamento vire game over fantasma. A licao geral e: sinais da engine
+descrevem fatos tecnicos; scripts de regra decidem se esses fatos contam para o
+jogo.

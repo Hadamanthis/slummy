@@ -8,7 +8,7 @@ enum State {
 
 @export var levels: Array[PackedScene] = []
 
-@onready var slime: CharacterBody2D = $Slime
+@onready var slime: Slime = $Slime
 @onready var level: Node2D = $Level
 @onready var hud: HUD = %HUD
 
@@ -27,25 +27,21 @@ func _ready() -> void:
 	_load_current_level()
 
 func _load_current_level() -> void:
-	# Ainda parece gambiarra
-	slime.set_control_enabled(false)
-	slime.velocity = Vector2.ZERO
-	# algo como slime.process_mode = PROCESS_MODE_DISABLED
+	slime.set_active(false)
 	
 	_remove_current_level()
 	
 	current_level = levels[current_level_index].instantiate()
 	level.add_child(current_level)
 	
+	slime.reset_for_level(current_level.get_slime_start_position())
+
 	# Atualizando informações sobre o level
 	_init_current_level_info()
 	hud.hide_result()
 	_update_hud()
 	
-	slime.global_position = current_level.get_slime_start_position()
-	slime.velocity = Vector2.ZERO # Não parece ser o melhor lugar pra isso aqui
-	# colocar em algo como _init_player() ou dentro de _init_current_level_info() (Mudando o nome para "_init_current_level()")
-	slime.set_control_enabled(true) 
+	slime.set_active(true)
 	
 	_connect_current_level_signals()
 
@@ -94,7 +90,7 @@ func stage_failed() -> void:
 		return
 	
 	state = State.STAGE_FAILED
-	slime.set_control_enabled(false)
+	slime.set_active(false)
 	hud.show_result("Fase %s Falhou" % current_level_number)
 	_update_hud()
 
@@ -103,7 +99,7 @@ func stage_cleared() -> void:
 		return
 	
 	state = State.STAGE_CLEARED
-	slime.set_control_enabled(false)
+	slime.set_active(false)
 	hud.show_result("Fase %s Completa" % current_level_number)
 	_update_hud()
 
@@ -126,7 +122,9 @@ func _on_player_hit(source_level: Level) -> void:
 	if state != State.PLAYING:
 		return
 	
-	print(state)
+	if not slime.can_hit_hazard():
+		return
+
 	stage_failed()
 
 func _connect_current_level_signals() -> void:
@@ -137,7 +135,7 @@ func _connect_current_level_signals() -> void:
 		spike.player_hit.connect(_on_player_hit.bind(current_level))
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_accept"):
+	if event.is_action_pressed("ui_accept") and not event.is_echo():
 		match state:
 			State.STAGE_FAILED:
 				_restart_current_level()
@@ -148,8 +146,6 @@ func _on_slime_launched() -> void:
 	fruits_collected_this_launch = 0
 
 func _on_slime_stopped() -> void:
-	await get_tree().process_frame
-	
 	if state != State.PLAYING:
 		return
 	

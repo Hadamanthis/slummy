@@ -20,6 +20,7 @@ enum State {
 @export var bounce_factor := 0.85
 
 @onready var aim_line: Line2D = $Line2D
+@onready var collision_shape: CollisionShape2D = $CollisionShape
 
 var state := State.IDLE
 var drag_position := Vector2.ZERO
@@ -92,22 +93,42 @@ func _try_launch() -> void:
 	
 	if force <= min_drag_distance:
 		state = State.IDLE
-		aim_line.visible = false
-		aim_line.clear_points()
+		_clear_aim()
 		return
 	
 	velocity = launch_vector.normalized() * force * launch_force_multiplier
 	state = State.MOVING
 	launched.emit()
 	
-	aim_line.visible = false
-	aim_line.clear_points()
+	_clear_aim()
 
 func set_control_enabled(is_enabled: bool) -> void:
 	control_enabled = is_enabled
 	
 	if not control_enabled:
-		velocity = Vector2.ZERO
 		state = State.IDLE
-		aim_line.visible = false
-		aim_line.clear_points()
+		_stop_motion()
+		_clear_aim()
+
+func set_active(is_active: bool) -> void:
+	set_control_enabled(is_active)
+	collision_shape.disabled = not is_active
+
+	if not is_active:
+		_stop_motion()
+
+func reset_for_level(start_position: Vector2) -> void:
+	set_active(false)
+	global_position = start_position
+	state = State.IDLE
+	_clear_aim()
+
+func can_hit_hazard() -> bool:
+	return control_enabled and state == State.MOVING
+
+func _clear_aim() -> void:
+	aim_line.visible = false
+	aim_line.clear_points()
+
+func _stop_motion() -> void:
+	velocity = Vector2.ZERO

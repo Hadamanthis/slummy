@@ -25,7 +25,7 @@ func get_remaining_fruits_count() -> int:
 	var count := 0
 	
 	for fruit in fruits.get_children():
-		if not fruit.is_queued_for_deletion():
+		if not fruit.is_collected:
 			count += 1
 			
 	return count
