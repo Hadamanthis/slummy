@@ -574,3 +574,97 @@ Essa segunda pergunta e mais forte porque cria planejamento, risco e tentativa
 de melhorar. O importante e a limitacao parecer justa: o jogador precisa sentir
 que perdeu por decisao, mira ou forca, nao por uma regra escondida ou fase mal
 posicionada.
+
+## 35. Cenas de fase precisam de contrato claro
+
+Carregar fases como cenas e uma boa pratica em Godot, mas a cena nao deve
+parecer apenas um amontoado de nos que a cena principal acessa por caminhos
+soltos.
+
+Um `Level` fica mais profissional quando expoe uma pequena API:
+
+- posicao inicial do jogador;
+- lista de frutas;
+- lista de perigos;
+- quantidade inicial de frutas;
+- quantidade de frutas restantes;
+- dados configuraveis como `max_launches`.
+
+Assim, `Main` controla o fluxo da partida, mas nao precisa conhecer todos os
+nomes internos da fase. A fase conhece sua composicao; a cena principal conhece
+a regra de vitoria, falha e troca de fase.
+
+## 36. Total inicial e estado restante sao informacoes diferentes
+
+Em uma fase com frutas coletaveis, existem pelo menos dois valores diferentes:
+
+- total inicial de frutas da fase;
+- frutas restantes durante a partida.
+
+O total inicial deve ser capturado quando a fase fica pronta, antes das frutas
+serem removidas. O restante pode ser calculado observando os filhos atuais ou
+ignorando objetos marcados com `queue_free()`.
+
+Misturar esses dois conceitos gera HUD confusa, como mostrar `1/1` depois que
+duas frutas ja foram coletadas em uma fase que comecou com tres.
+
+## 37. Eventos de runtime devem carregar contexto quando cenas trocam
+
+Quando a cena principal carrega e remove fases, sinais podem chegar de objetos
+que pertenciam a uma fase anterior ou de uma fase recem-criada.
+
+Uma forma simples de evitar evento fantasma e conectar o sinal carregando a
+referencia da fase:
+
+```gdscript
+fruit.collected.connect(_on_fruit_collected.bind(current_level))
+spike.player_hit.connect(_on_player_hit.bind(current_level))
+```
+
+O handler entao valida:
+
+```gdscript
+if source_level != current_level:
+	return
+```
+
+Esse padrao e util sempre que objetos temporarios emitem sinais para um dono
+persistente: fases, salas, waves, inimigos, projeteis e pickups.
+
+## 38. Desativar processamento nao e o mesmo que desativar presenca fisica
+
+`process_mode = PROCESS_MODE_DISABLED` impede callbacks de processamento e
+input do no, mas nao deve ser tratado como garantia de que o objeto deixou de
+ser detectado por `Area2D`.
+
+Para controlar se um personagem pode disparar `body_entered` em perigos, o
+caminho mais explicito e controlar a colisao/hitbox:
+
+- input desabilitado bloqueia comando do jogador;
+- velocidade zerada bloqueia movimento residual;
+- collision shape desabilitada remove presenca fisica temporaria.
+
+Isso separa melhor tres conceitos diferentes: controle, movimento e deteccao
+fisica.
+
+## 39. Transicao de fase merece uma funcao propria
+
+Quando uma fase reinicia, varias coisas precisam acontecer juntas:
+
+- bloquear controle;
+- zerar velocidade;
+- remover fase antiga;
+- criar fase nova;
+- posicionar jogador no `SlimeStart`;
+- reiniciar contadores;
+- esconder mensagens da HUD;
+- conectar sinais da fase nova;
+- liberar controle.
+
+Se essas etapas ficam espalhadas, bugs de estado aparecem com facilidade. Uma
+funcao como `reset_for_level(start_position)` no jogador e funcoes menores na
+`Main` deixam a transicao mais legivel e reduzem repeticao.
+
+Regra pratica: quando o mesmo par de linhas aparece em varios lugares, como
+`set_control_enabled(false)` e `velocity = Vector2.ZERO`, provavelmente existe
+um conceito faltando no codigo.
