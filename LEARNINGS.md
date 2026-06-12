@@ -697,3 +697,44 @@ Esse padrao evita que `body_entered` durante reload, reativacao ou
 reposicionamento vire game over fantasma. A licao geral e: sinais da engine
 descrevem fatos tecnicos; scripts de regra decidem se esses fatos contam para o
 jogo.
+
+## 41. Visual de parede e colisao de parede podem ser coisas diferentes
+
+Em jogos 2D, a parede que o jogador ve nao precisa ser o mesmo no que faz a
+colisao. Muitas vezes o melhor resultado vem de separar:
+
+- um sprite maior que comunica a arena, borda, material e identidade visual;
+- `StaticBody2D` com `CollisionShape2D` simples para definir os limites reais.
+
+Essa separacao evita tentar resolver problema visual com collider complexo, ou
+problema de fisica com sprite esticado. O importante e que a colisao pareca
+justa em relacao ao desenho.
+
+## 42. Fases precisam de uma convencao de coordenadas
+
+Quando cada fase posiciona arena, frutas, perigos e jogador com uma logica
+diferente, pequenos ajustes visuais viram retrabalho. Uma convencao simples ja
+ajuda muito:
+
+- manter a arena sempre no mesmo centro visual;
+- deixar grupos como `Fruits` e `Spikes` sem deslocamento quando nao houver
+  necessidade;
+- posicionar objetos dentro de uma zona segura da arena;
+- evitar escala/rotacao extrema em sprites que representam objetos especificos.
+
+Isso deixa a fase mais facil de revisar no editor e prepara o projeto para uma
+refatoracao futura com dados de fase ou cenas padronizadas.
+
+## 43. Background de jogo nao deve depender da cor padrao do viewport
+
+Quando a area fora do tabuleiro mostra a cor cinza padrao da engine, o jogo
+parece inacabado mesmo que a mecanica esteja funcionando. Em jogos 2D, uma
+solucao simples e profissional e separar camadas visuais:
+
+- um background de tela inteira para identidade e atmosfera;
+- um floor/tabuleiro para a area jogavel;
+- paredes, objetos e personagens por cima;
+- uma cor `default_clear_color` coerente como fallback.
+
+O background deve apoiar a leitura do jogo, nao competir com ela. Por isso, o
+centro costuma ser mais calmo, e os detalhes ficam melhor nas bordas.

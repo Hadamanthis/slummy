@@ -9,32 +9,29 @@
 script = ExtResource("1_0qepi")
 
 [node name="Arena" parent="." unique_id=1131801412 instance=ExtResource("2_fmg3e")]
-position = Vector2(452, 259)
+position = Vector2(576, 324)
 
 [node name="SlimeStart" type="Marker2D" parent="." unique_id=2128014812]
-position = Vector2(834, 54)
+position = Vector2(880, 491)
 
 [node name="Fruits" type="Node2D" parent="." unique_id=931428413]
-position = Vector2(452, 259)
 
 [node name="Fruit" parent="Fruits" unique_id=1137598225 instance=ExtResource("4_fkk1g")]
-position = Vector2(235, -203)
+position = Vector2(795, 146)
 
 [node name="Fruit2" parent="Fruits" unique_id=448157826 instance=ExtResource("4_fkk1g")]
-position = Vector2(61, -205)
+position = Vector2(645, 146)
 
 [node name="Fruit3" parent="Fruits" unique_id=412075131 instance=ExtResource("4_fkk1g")]
-position = Vector2(-86, -203)
+position = Vector2(500, 156)
 
 [node name="Fruit4" parent="Fruits" unique_id=1206852720 instance=ExtResource("4_fkk1g")]
-position = Vector2(-221, -24)
+position = Vector2(365, 321)
 
 [node name="Fruit5" parent="Fruits" unique_id=74756835 instance=ExtResource("4_fkk1g")]
-position = Vector2(-89, 126)
+position = Vector2(540, 461)
 
 [node name="Spikes" type="Node2D" parent="." unique_id=1893585255]
 
 [node name="Spike" parent="Spikes" unique_id=651547768 instance=ExtResource("3_ftfob")]
-position = Vector2(565, 104.99997)
-rotation = -1.5756272
-scale = Vector2(1, 20.319967)
+position = Vector2(690, 306)

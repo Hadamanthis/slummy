@@ -1,6 +1,22 @@
 [gd_scene format=3 uid="uid://bg6do8xlde55g"]
 
 [ext_resource type="Script" uid="uid://d4fyrunhs7lcq" path="res://scripts/hud.gd" id="1_ahhtf"]
+[ext_resource type="Theme" uid="uid://c0hocmbr3ytj2" path="res://ui/themes/slummy_hud_themes.tres" id="1_oo0fn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hud_panel"]
+bg_color = Color(0.0392157, 0.0784314, 0.129412, 0.82)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.219608, 0.827451, 0.862745, 0.78)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.32)
+shadow_size = 8
+shadow_offset = Vector2(0, 3)
 
 [node name="HUD" type="Control" unique_id=1250542329]
 layout_mode = 3
@@ -10,6 +26,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+theme = ExtResource("1_oo0fn")
 script = ExtResource("1_ahhtf")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=2060935754]
@@ -28,6 +45,7 @@ theme_override_constants/margin_bottom = 12
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_hud_panel")
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer" unique_id=1997797773]
 layout_mode = 2
@@ -47,6 +65,8 @@ texture_filter = 2
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
+theme = ExtResource("1_oo0fn")
+theme_type_variation = &"HUDLabel"
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 5
 theme_override_font_sizes/font_size = 15
@@ -57,6 +77,8 @@ vertical_alignment = 1
 unique_name_in_owner = true
 texture_filter = 2
 layout_mode = 2
+theme = ExtResource("1_oo0fn")
+theme_type_variation = &"HUDValue"
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 5
 theme_override_font_sizes/font_size = 15
@@ -72,6 +94,8 @@ texture_filter = 2
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
+theme = ExtResource("1_oo0fn")
+theme_type_variation = &"HUDLabel"
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 5
 theme_override_font_sizes/font_size = 15
@@ -82,6 +106,8 @@ vertical_alignment = 1
 unique_name_in_owner = true
 texture_filter = 2
 layout_mode = 2
+theme = ExtResource("1_oo0fn")
+theme_type_variation = &"HUDValue"
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 5
 theme_override_font_sizes/font_size = 15
@@ -97,6 +123,8 @@ texture_filter = 2
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
+theme = ExtResource("1_oo0fn")
+theme_type_variation = &"HUDLabel"
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 5
 theme_override_font_sizes/font_size = 15
@@ -107,6 +135,8 @@ vertical_alignment = 1
 unique_name_in_owner = true
 texture_filter = 2
 layout_mode = 2
+theme = ExtResource("1_oo0fn")
+theme_type_variation = &"HUDValue"
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 5
 theme_override_font_sizes/font_size = 15
@@ -122,6 +152,8 @@ texture_filter = 2
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
+theme = ExtResource("1_oo0fn")
+theme_type_variation = &"HUDLabel"
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 5
 theme_override_font_sizes/font_size = 15
@@ -132,6 +164,8 @@ vertical_alignment = 1
 unique_name_in_owner = true
 texture_filter = 2
 layout_mode = 2
+theme = ExtResource("1_oo0fn")
+theme_type_variation = &"HUDValue"
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 5
 theme_override_font_sizes/font_size = 15
@@ -156,4 +190,10 @@ mouse_filter = 2
 [node name="ResultLabel" type="Label" parent="ResultContainer" unique_id=1992051406]
 unique_name_in_owner = true
 layout_mode = 2
+theme = ExtResource("1_oo0fn")
+theme_type_variation = &"ResultTitle"
+theme_override_colors/font_color = Color(1, 0.94902, 0.901961, 1)
+theme_override_colors/font_outline_color = Color(0.0392157, 0.0470588, 0.0784314, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 22
 text = "Fase Completa"

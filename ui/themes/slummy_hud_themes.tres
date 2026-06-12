@@ -1,0 +1,23 @@
+[gd_resource type="Theme" format=3 uid="uid://c0hocmbr3ytj2"]
+
+[ext_resource type="FontFile" uid="uid://drx2273b6ggfm" path="res://assets/fonts/Nunito-SemiBold.ttf" id="1_ehy65"]
+[ext_resource type="FontFile" uid="uid://8jhu64ejco0r" path="res://assets/fonts/Fredoka-Bold.ttf" id="2_qjigq"]
+
+[resource]
+HUDLabel/base_type = &"Label"
+HUDLabel/colors/font_color = Color(0.99215686, 0.9490196, 0.9137255, 1)
+HUDLabel/colors/font_outline_color = Color(2.5870278e-07, 0, 0.20952475, 1)
+HUDLabel/constants/outline_size = 4
+HUDLabel/fonts/font = ExtResource("1_ehy65")
+HUDValue/base_type = &"Label"
+HUDValue/colors/font_color = Color(1, 1, 1, 1)
+HUDValue/colors/font_outline_color = Color(0, 0, 0.20784314, 1)
+HUDValue/constants/outline_size = 5
+HUDValue/font_sizes/font_size = 18
+HUDValue/fonts/font = ExtResource("2_qjigq")
+ResultTitle/base_type = &"Label"
+ResultTitle/colors/font_color = Color(1, 0.95686275, 0.9019608, 1)
+ResultTitle/colors/font_outline_color = Color(0, 0, 0.22352941, 1)
+ResultTitle/constants/outline_size = 7
+ResultTitle/font_sizes/font_size = 28
+ResultTitle/fonts/font = ExtResource("2_qjigq")

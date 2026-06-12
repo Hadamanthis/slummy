@@ -1,39 +1,50 @@
 [gd_scene format=3 uid="uid://bkujtylea3x2"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ug7gw"]
+[ext_resource type="Texture2D" uid="uid://ckwhfi2bxw048" path="res://assets/sprites/prototype/floor.png" id="1_floor"]
+[ext_resource type="Texture2D" uid="uid://dm4s8gbbh3awj" path="res://assets/sprites/prototype/arena_wall_frame.png" id="2_wall_frame"]
+
+[sub_resource type="RectangleShape2D" id="TopWallShape"]
 size = Vector2(900, 32)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_e05a3"]
+[sub_resource type="RectangleShape2D" id="BottomWallShape"]
+size = Vector2(900, 32)
+
+[sub_resource type="RectangleShape2D" id="SideWallShape"]
 size = Vector2(32, 520)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_wl4x5"]
-size = Vector2(900, 32)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_olpmc"]
+[sub_resource type="RectangleShape2D" id="RightWallShape"]
 size = Vector2(32, 520)
 
 [node name="Arena" type="Node2D" unique_id=1131801412]
 
+[node name="Floor" type="Sprite2D" parent="." unique_id=780716779]
+z_index = -20
+texture = ExtResource("1_floor")
+
+[node name="WallFrame" type="Sprite2D" parent="." unique_id=1264792833]
+z_index = -5
+texture = ExtResource("2_wall_frame")
+
 [node name="TopWall" type="StaticBody2D" parent="." unique_id=226398728]
-position = Vector2(0, -260)
+position = Vector2(0, -250)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TopWall" unique_id=1557109342]
-shape = SubResource("RectangleShape2D_ug7gw")
-
-[node name="LeftWall" type="StaticBody2D" parent="." unique_id=471763731]
-position = Vector2(-450, 0)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall" unique_id=1342925572]
-shape = SubResource("RectangleShape2D_e05a3")
+shape = SubResource("TopWallShape")
 
 [node name="BottomWall" type="StaticBody2D" parent="." unique_id=498287151]
-position = Vector2(0, 260)
+position = Vector2(0, 250)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BottomWall" unique_id=79025100]
-shape = SubResource("RectangleShape2D_wl4x5")
+shape = SubResource("BottomWallShape")
+
+[node name="LeftWall" type="StaticBody2D" parent="." unique_id=471763731]
+position = Vector2(-445, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall" unique_id=1342925572]
+shape = SubResource("SideWallShape")
 
 [node name="RightWall" type="StaticBody2D" parent="." unique_id=1977193186]
-position = Vector2(450, 0)
+position = Vector2(445, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall" unique_id=551209791]
-shape = SubResource("RectangleShape2D_olpmc")
+shape = SubResource("RightWallShape")

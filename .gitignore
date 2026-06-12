@@ -2,3 +2,5 @@
 .godot/
 /android/
 *.tmp
+skills/_sources/
+assets/fonts/_sources/

@@ -6,10 +6,17 @@
 [ext_resource type="PackedScene" uid="uid://cwrrp3ird0p1" path="res://scenes/levels/level_2.tscn" id="3_tbgi4"]
 [ext_resource type="PackedScene" uid="uid://ebfbopupedrl" path="res://scenes/levels/level_3.tscn" id="4_tefeu"]
 [ext_resource type="PackedScene" uid="uid://bg6do8xlde55g" path="res://scenes/hud.tscn" id="5_tbgi4"]
+[ext_resource type="Texture2D" uid="uid://c70djjsn7r4om" path="res://assets/sprites/prototype/background.png" id="6_bg"]
 
 [node name="Main" type="Node2D" unique_id=1430134489]
 script = ExtResource("1_jyhfs")
 levels = Array[PackedScene]([ExtResource("2_jyhfs"), ExtResource("3_tbgi4"), ExtResource("4_tefeu")])
+
+[node name="Background" type="Sprite2D" parent="." unique_id=740157193]
+z_index = -100
+position = Vector2(576, 324)
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("6_bg")
 
 [node name="Slime" parent="." unique_id=177085480 instance=ExtResource("1_o5qli")]
 position = Vector2(568, 326)

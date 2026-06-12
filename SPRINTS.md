@@ -8,7 +8,8 @@ em polimento, conteudo extra ou sistemas grandes.
 
 Ultima atualizacao: prototipo jogavel com movimento, ricochete, coleta,
 perigo, restart, fases manuais, suporte a multiplas frutas por fase e
-pontuacao calculada por lancamento.
+pontuacao calculada por lancamento, HUD de fase e fluxo de reinicio/avanco
+mais robusto.
 
 Concluido:
 
@@ -19,12 +20,16 @@ Concluido:
 - Sprint 5: carregamento de fases manuais;
 - Sprint 6, parte 1: multiplas frutas por fase e troca de fase apos coletar todas;
 - Sprint 6, parte 2: contar frutas coletadas no mesmo lancamento e pontuar no
-  fim do lancamento.
+  fim do lancamento;
+- Sprint 7: limite de lancamentos por fase;
+- Sprint 8: robustez do fluxo de fases, com `STAGE_CLEARED`, `STAGE_FAILED`,
+  HUD de resultado, reinicio de fase e eventos fisicos filtrados por estado de
+  gameplay.
 
 Em andamento:
 
-- Sprint 7: adicionar limite de lancamentos por fase para criar pressao,
-  objetivo claro e vontade de tentar de novo.
+- Sprint 9: definicao e consolidacao das regras atuais antes de adicionar mais
+  fases, objetos ou polimento.
 
 Decisoes registradas:
 
@@ -518,23 +523,32 @@ Checkpoint recomendado:
 
 Criar commit quando o fluxo falhar/reiniciar/vencer/avancar estiver confiavel.
 
-## Sprint 9 - Mais fases manuais com intencao
+## Sprint 9 - Definicao das regras atuais
 
 Objetivo:
 
-Criar um pequeno conjunto de fases que revele se o core loop precisa de novos
-elementos, mais leitura visual ou mudancas de regra.
+Trabalhar mais no que ja existe antes de adicionar conteudo novo. A sprint deve
+deixar claras as regras de fase, pontuacao, falha, sucesso, controle e feedback
+minimo para que as proximas decisoes sejam tomadas com menos chute.
 
 Entregas:
 
-- revisar `Level_01`, `Level_02` e `Level_03` com uma intencao clara;
-- criar pelo menos uma quarta fase manual;
-- cada fase deve testar uma pergunta diferente de design;
-- documentar a intencao de cada fase em uma tabela simples;
-- evitar adicionar objetos especiais antes de saber qual problema eles resolvem.
+- decidir se a pontuacao por fase continua relevante com limite de lancamentos;
+- decidir se falha por espinho e falha por falta de lancamentos usam a mesma
+  mensagem ou mensagens diferentes;
+- decidir o que acontece ao concluir a ultima fase temporaria;
+- definir o texto minimo da HUD para resultado e proximo comando;
+- revisar se frutas devem ser coletaveis em qualquer contato ou apenas em
+  estados especificos de gameplay;
+- revisar se perigos devem afetar apenas o slime em movimento;
+- limpar nomes, comentarios temporarios e funcoes da `Main`, `Level`, `Slime`,
+  `Fruit`, `Spike` e `HUD`;
+- documentar as decisoes tomadas nesta sprint.
 
 Fora da sprint:
 
+- criar novas fases;
+- adicionar objetos especiais;
 - polimento visual pesado;
 - ajuste fino de parametros;
 - sons;
@@ -544,26 +558,79 @@ Fora da sprint:
 
 Criterio de conclusao:
 
-As fases devem expor se o jogo precisa de mais obstaculos, melhor feedback,
-melhor UI ou apenas melhor desenho de arena.
+O prototipo deve ter regras compreensiveis para as fases ja existentes: o
+jogador entende o objetivo, entende por que falhou, sabe como tentar novamente
+e a HUD nao mostra informacao que ainda nao tem papel claro.
 
 Teste manual:
 
-- cada fase deve ter uma rota esperada;
-- cada fase deve ter pelo menos um erro comum observavel;
-- nenhuma fase deve depender de sorte;
-- o jogador deve entender por que falhou.
+- jogar as fases atuais sem criar conteudo novo;
+- anotar se a pontuacao influencia alguma decisao real;
+- falhar por espinho e por lancamentos e conferir se as mensagens ajudam;
+- concluir a ultima fase e conferir se o comportamento temporario e aceitavel;
+- verificar se algum texto da HUD esta sobrando ou faltando;
+- verificar se eventos fisicos so viram gameplay quando a regra permite.
 
 Checkpoint recomendado:
 
-Criar commit quando houver um pequeno pacote de fases manuais jogaveis e com
-intencao clara.
+Criar commit quando as decisoes de regra atuais estiverem registradas e o fluxo
+das fases existentes estiver limpo.
 
-## Sprint 10 - Ajuste de feel sem polimento pesado
+## Sprint 10 - Identidade visual e feedback de fase
 
 Objetivo:
 
-Ajustar parametros principais antes de adicionar conteudo.
+Dar uma cara mais concreta ao jogo usando apenas o que ja existe: slime,
+frutas, espinhos, fases, pontuacao e resultado. A meta nao e arte final, mas
+um primeiro pacote visual que deixe o prototipo parecer mais proximo de um jogo
+real e ajude a avaliar melhor o core loop.
+
+Entregas:
+
+- definir uma direcao visual temporaria para o slime, frutas, espinhos, arena
+  e HUD;
+- criar um modal simples de fim de fase para `STAGE_CLEARED` e `STAGE_FAILED`;
+- definir avaliacao de desempenho por estrelas ou equivalente visual simples;
+- mostrar no resultado se a fase foi vencida bem, razoavelmente ou no limite;
+- melhorar a leitura visual de perigo, coleta e objetivo sem adicionar novos
+  sistemas;
+- manter os assets como placeholders bons, nao arte final.
+
+Fora da sprint:
+
+- ajuste fino de parametros;
+- sons;
+- particulas;
+- animacoes complexas;
+- selecao completa de fases.
+- criar novas fases;
+- adicionar objetos especiais.
+
+Criterio de conclusao:
+
+O jogo deve parecer visualmente mais intencional, e o jogador deve entender o
+resultado da fase sem depender de console ou interpretacao abstrata da HUD.
+
+Teste manual:
+
+- concluir uma fase deve abrir um resultado claro;
+- falhar uma fase deve abrir um resultado claro;
+- o sistema de estrelas deve parecer compreensivel mesmo se ainda for simples;
+- os elementos principais devem ter silhuetas e cores distintas;
+- a HUD deve ajudar sem competir com a arena.
+
+Checkpoint recomendado:
+
+Criar commit quando o primeiro pacote visual deixar as fases atuais mais
+legiveis e avaliaveis.
+
+## Sprint 11 - Ajuste de feel sem polimento pesado
+
+Objetivo:
+
+Ajustar parametros principais depois que o jogo tiver uma primeira identidade
+visual e feedback de resultado. A meta e calibrar o brinquedo principal com
+mais informacao visual do que havia no prototipo cinza.
 
 Entregas:
 
@@ -599,7 +666,7 @@ Checkpoint recomendado:
 
 Criar commit quando os parametros principais estiverem escolhidos.
 
-## Sprint 11 - Primeiro pacote de juice
+## Sprint 12 - Primeiro pacote de juice
 
 Objetivo:
 
@@ -611,8 +678,8 @@ Entregas:
 - indicador simples de forca;
 - squash/stretch basico no slime;
 - particula simples ao coletar fruta;
-- feedback visual simples no game over;
-- som temporario para lancar, quicar, coletar e morrer.
+- feedback visual simples no resultado da fase;
+- som temporario para lancar, quicar, coletar e falhar.
 
 Fora da sprint:
 
@@ -638,6 +705,46 @@ Teste manual:
 Checkpoint recomendado:
 
 Criar commit quando o primeiro pacote de juice estiver integrado.
+
+## Sprint 13 - Mais fases manuais com intencao
+
+Objetivo:
+
+Criar um pequeno conjunto de fases que revele se o core loop precisa de novos
+elementos, mais leitura visual ou mudancas de regra.
+
+Entregas:
+
+- revisar `Level_01`, `Level_02` e `Level_03` com uma intencao clara;
+- criar pelo menos uma quarta fase manual;
+- cada fase deve testar uma pergunta diferente de design;
+- documentar a intencao de cada fase em uma tabela simples;
+- evitar adicionar objetos especiais antes de saber qual problema eles resolvem.
+
+Fora da sprint:
+
+- polimento visual pesado;
+- ajuste fino de parametros;
+- sons;
+- particulas;
+- selecao completa de fases.
+
+Criterio de conclusao:
+
+As fases devem expor se o jogo precisa de mais obstaculos, melhor feedback,
+melhor UI ou apenas melhor desenho de arena.
+
+Teste manual:
+
+- cada fase deve ter uma rota esperada;
+- cada fase deve ter pelo menos um erro comum observavel;
+- nenhuma fase deve depender de sorte;
+- o jogador deve entender por que falhou.
+
+Checkpoint recomendado:
+
+Criar commit quando houver um pequeno pacote de fases manuais jogaveis e com
+intencao clara.
 
 ## Backlog pos-MVP
 
