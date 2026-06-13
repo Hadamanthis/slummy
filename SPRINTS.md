@@ -7,9 +7,9 @@ em polimento, conteudo extra ou sistemas grandes.
 ## Progresso atual
 
 Ultima atualizacao: prototipo jogavel com movimento, ricochete, coleta,
-perigo, restart, fases manuais, suporte a multiplas frutas por fase e
-pontuacao calculada por lancamento, HUD de fase e fluxo de reinicio/avanco
-mais robusto.
+perigo, restart, fases manuais, suporte a multiplas frutas por fase,
+pontuacao calculada por lancamento, HUD de fase com primeiro passe visual
+menos textual e fluxo de reinicio/avanco mais robusto.
 
 Concluido:
 
@@ -28,8 +28,8 @@ Concluido:
 
 Em andamento:
 
-- Sprint 9: definicao e consolidacao das regras atuais antes de adicionar mais
-  fases, objetos ou polimento.
+- Sprint 10: identidade visual e feedback de fase, com primeiro passe de HUD
+  sobreposta menos textual e revisao dos icones de gameplay.
 
 Decisoes registradas:
 
@@ -46,6 +46,13 @@ Decisoes registradas:
   `fruits_collected_this_launch ** 2`;
 - a proxima hipotese de core loop e tratar cada fase como um desafio com
   quantidade limitada de lancamentos.
+- estrelas ficam reservadas para avaliacao/ranking de desempenho da fase, nao
+  para pontuacao durante o gameplay;
+- a HUD deve reservar largura fixa para valores dinamicos como `2/2` e `3/3`,
+  evitando que o painel mude de tamanho quando os numeros atualizam;
+- icone de lancamento e icone de pontuacao continuam pendentes: devem ser
+  definidos depois que o visual da mira/lancamento e o papel da pontuacao
+  estiverem mais claros.
 
 ## Decisoes atuais de design
 
@@ -623,6 +630,22 @@ Checkpoint recomendado:
 
 Criar commit quando o primeiro pacote visual deixar as fases atuais mais
 legiveis e avaliaveis.
+
+Status: em andamento. Primeiro passe de HUD implementado com elementos
+sobrepostos, `Level` mais destacado, contador de frutas com icone, contador de
+lancamentos com valor compacto e largura fixa para evitar mudanca de tamanho
+ao atualizar valores. O icone de lancamento ainda e placeholder e deve ser
+substituido depois que o feedback visual da mira/lancamento for melhorado.
+
+Pendencias atuais:
+
+- definir se a pontuacao continua visivel durante o gameplay ou se aparece
+  apenas no resultado da fase;
+- criar um icone proprio para pontuacao se ela permanecer como informacao
+  principal;
+- criar/substituir o icone de lancamento depois do visual da mira/lancamento;
+- usar estrelas no modal de resultado para ranking da fase;
+- criar modal de resultado com estrelas para vitoria/falha.
 
 ## Sprint 11 - Ajuste de feel sem polimento pesado
 

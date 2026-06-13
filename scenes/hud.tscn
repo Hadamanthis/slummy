@@ -2,13 +2,13 @@
 
 [ext_resource type="Script" uid="uid://d4fyrunhs7lcq" path="res://scripts/hud.gd" id="1_ahhtf"]
 [ext_resource type="Theme" uid="uid://c0hocmbr3ytj2" path="res://ui/themes/slummy_hud_themes.tres" id="1_oo0fn"]
+[ext_resource type="Texture2D" uid="uid://c5jxjew0aafnh" path="res://assets/sprites/prototype/fruit.png" id="3_5ysmq"]
+[ext_resource type="Texture2D" uid="uid://cv20soqti6pta" path="res://assets/sprites/prototype/wall.png" id="4_6fi6k"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oo0fn"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hud_panel"]
-bg_color = Color(0.0392157, 0.0784314, 0.129412, 0.82)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
+bg_color = Color(0.27504867, 0.4001167, 0.5631024, 0.18039216)
 border_color = Color(0.219608, 0.827451, 0.862745, 0.78)
 corner_radius_top_left = 8
 corner_radius_top_right = 8
@@ -17,6 +17,8 @@ corner_radius_bottom_left = 8
 shadow_color = Color(0, 0, 0, 0.32)
 shadow_size = 8
 shadow_offset = Vector2(0, 3)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5ysmq"]
 
 [node name="HUD" type="Control" unique_id=1250542329]
 layout_mode = 3
@@ -41,134 +43,174 @@ theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 12
 theme_override_constants/margin_bottom = 12
 
-[node name="PanelContainer" type="PanelContainer" parent="MarginContainer" unique_id=802827423]
+[node name="LevelContainer" type="PanelContainer" parent="MarginContainer" unique_id=707839057]
 layout_mode = 2
-size_flags_horizontal = 8
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_oo0fn")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/LevelContainer" unique_id=1906581056]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/LevelContainer/MarginContainer" unique_id=974534798]
+layout_mode = 2
+
+[node name="LevelRow" type="HBoxContainer" parent="MarginContainer/LevelContainer/MarginContainer/VBoxContainer" unique_id=1589642086]
+layout_mode = 2
+alignment = 1
+
+[node name="LevelLabel" type="Label" parent="MarginContainer/LevelContainer/MarginContainer/VBoxContainer/LevelRow" unique_id=1764878496]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme = ExtResource("1_oo0fn")
+theme_type_variation = &"HUDValue"
+theme_override_colors/font_color = Color(0, 0.8627451, 0.8745098, 1)
+theme_override_colors/font_shadow_color = Color(0.90457547, 0.60860926, 0.79196, 1)
+theme_override_colors/font_outline_color = Color(0.33338153, 0.10281048, 0.25716627, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 5
+theme_override_constants/shadow_outline_size = 13
+theme_override_font_sizes/font_size = 45
+text = "Level"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LevelValue" type="Label" parent="MarginContainer/LevelContainer/MarginContainer/VBoxContainer/LevelRow" unique_id=2076757843]
+unique_name_in_owner = true
+texture_filter = 2
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_oo0fn")
+theme_type_variation = &"HUDValue"
+theme_override_colors/font_color = Color(0, 0.8627451, 0.8745098, 1)
+theme_override_colors/font_shadow_color = Color(0.90457547, 0.60860926, 0.79196, 1)
+theme_override_colors/font_outline_color = Color(0.33338153, 0.10281048, 0.25716627, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/shadow_outline_size = 13
+theme_override_font_sizes/font_size = 45
+text = "0"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CountsContainer" type="PanelContainer" parent="MarginContainer/LevelContainer/MarginContainer/VBoxContainer" unique_id=556660843]
+layout_mode = 2
 size_flags_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_hud_panel")
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer" unique_id=1997797773]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/LevelContainer/MarginContainer/VBoxContainer/CountsContainer" unique_id=685923052]
 layout_mode = 2
 theme_override_constants/margin_left = 12
 theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 12
 theme_override_constants/margin_bottom = 12
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer" unique_id=1827954033]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/LevelContainer/MarginContainer/VBoxContainer/CountsContainer/MarginContainer" unique_id=1588258875]
 layout_mode = 2
+alignment = 2
 
-[node name="LevelRow" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=459844067]
+[node name="FruitRow" type="HBoxContainer" parent="MarginContainer/LevelContainer/MarginContainer/VBoxContainer/CountsContainer/MarginContainer/VBoxContainer" unique_id=718975196]
 layout_mode = 2
+theme_override_constants/separation = 15
 
-[node name="LevelLabel" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/LevelRow" unique_id=274820124]
-texture_filter = 2
+[node name="FruitIcon" type="TextureRect" parent="MarginContainer/LevelContainer/MarginContainer/VBoxContainer/CountsContainer/MarginContainer/VBoxContainer/FruitRow" unique_id=420836616]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 1
-theme = ExtResource("1_oo0fn")
-theme_type_variation = &"HUDLabel"
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 5
-theme_override_font_sizes/font_size = 15
-text = "Fase"
-vertical_alignment = 1
+texture = ExtResource("3_5ysmq")
+expand_mode = 2
+stretch_mode = 5
 
-[node name="LevelValue" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/LevelRow" unique_id=1523882176]
+[node name="FruitsValue" type="Label" parent="MarginContainer/LevelContainer/MarginContainer/VBoxContainer/CountsContainer/MarginContainer/VBoxContainer/FruitRow" unique_id=493637939]
 unique_name_in_owner = true
 texture_filter = 2
+custom_minimum_size = Vector2(76, 32)
 layout_mode = 2
 theme = ExtResource("1_oo0fn")
 theme_type_variation = &"HUDValue"
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 5
-theme_override_font_sizes/font_size = 15
-text = "0"
+theme_override_font_sizes/font_size = 25
+text = "3/3"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MissionRow" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=259646454]
+[node name="LaunchesRow" type="HBoxContainer" parent="MarginContainer/LevelContainer/MarginContainer/VBoxContainer/CountsContainer/MarginContainer/VBoxContainer" unique_id=1887048335]
 layout_mode = 2
+theme_override_constants/separation = 15
 
-[node name="FruitsLabel" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/MissionRow" unique_id=968670973]
-texture_filter = 2
+[node name="LaunchIcon" type="TextureRect" parent="MarginContainer/LevelContainer/MarginContainer/VBoxContainer/CountsContainer/MarginContainer/VBoxContainer/LaunchesRow" unique_id=763762780]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 1
-theme = ExtResource("1_oo0fn")
-theme_type_variation = &"HUDLabel"
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 5
-theme_override_font_sizes/font_size = 15
-text = "Frutas"
-vertical_alignment = 1
+texture = ExtResource("4_6fi6k")
+expand_mode = 2
+stretch_mode = 5
 
-[node name="FruitsValue" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/MissionRow" unique_id=1189358569]
+[node name="LaunchesLeftValue" type="Label" parent="MarginContainer/LevelContainer/MarginContainer/VBoxContainer/CountsContainer/MarginContainer/VBoxContainer/LaunchesRow" unique_id=1080817766]
 unique_name_in_owner = true
 texture_filter = 2
+custom_minimum_size = Vector2(76, 32)
 layout_mode = 2
 theme = ExtResource("1_oo0fn")
 theme_type_variation = &"HUDValue"
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 5
-theme_override_font_sizes/font_size = 15
-text = "0"
+theme_override_font_sizes/font_size = 25
+text = "3/3"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ScoreRow" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1709485686]
+[node name="ScoreContainer" type="PanelContainer" parent="MarginContainer" unique_id=254858777]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_5ysmq")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/ScoreContainer" unique_id=2119066508]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/ScoreContainer/MarginContainer" unique_id=55416976]
 layout_mode = 2
 
-[node name="ScoreLabel" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/ScoreRow" unique_id=263477430]
-texture_filter = 2
+[node name="ScoreLabel" type="Label" parent="MarginContainer/ScoreContainer/MarginContainer/VBoxContainer" unique_id=759008856]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 theme = ExtResource("1_oo0fn")
-theme_type_variation = &"HUDLabel"
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 5
-theme_override_font_sizes/font_size = 15
-text = "Pontuação"
-vertical_alignment = 1
-
-[node name="ScoreValue" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/ScoreRow" unique_id=1366242505]
-unique_name_in_owner = true
-texture_filter = 2
-layout_mode = 2
-theme = ExtResource("1_oo0fn")
 theme_type_variation = &"HUDValue"
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0.8627451, 0.8745098, 1)
+theme_override_colors/font_shadow_color = Color(0.90457547, 0.60860926, 0.79196, 1)
+theme_override_colors/font_outline_color = Color(0.33338153, 0.10281048, 0.25716627, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 2
 theme_override_constants/outline_size = 5
-theme_override_font_sizes/font_size = 15
-text = "0"
-horizontal_alignment = 1
+theme_override_constants/shadow_outline_size = 13
+theme_override_font_sizes/font_size = 45
+text = "Score"
 vertical_alignment = 1
 
-[node name="LaunchesRow" type="HBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1887048335]
-layout_mode = 2
-
-[node name="LaunchesLeftLabel" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/LaunchesRow" unique_id=1670190589]
-texture_filter = 2
+[node name="ScoreValue" type="Label" parent="MarginContainer/ScoreContainer/MarginContainer/VBoxContainer" unique_id=268441649]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 theme = ExtResource("1_oo0fn")
-theme_type_variation = &"HUDLabel"
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 5
-theme_override_font_sizes/font_size = 15
-text = "Lançamentos"
-vertical_alignment = 1
-
-[node name="LaunchesLeftValue" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/LaunchesRow" unique_id=797218070]
-unique_name_in_owner = true
-texture_filter = 2
-layout_mode = 2
-theme = ExtResource("1_oo0fn")
 theme_type_variation = &"HUDValue"
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0.8627451, 0.8745098, 1)
+theme_override_colors/font_shadow_color = Color(0.90457547, 0.60860926, 0.79196, 1)
+theme_override_colors/font_outline_color = Color(0.33338153, 0.10281048, 0.25716627, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 2
 theme_override_constants/outline_size = 5
-theme_override_font_sizes/font_size = 15
+theme_override_constants/shadow_outline_size = 13
+theme_override_font_sizes/font_size = 50
 text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1

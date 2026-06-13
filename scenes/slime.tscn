@@ -1,8 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://s4y0fd6kr5g7"]
+[gd_scene format=3 uid="uid://s4y0fd6kr5g7"]
 
 [ext_resource type="Script" uid="uid://dr7t2rnkky315" path="res://scripts/slime.gd" id="1_p2gj0"]
-[ext_resource type="Texture2D" path="res://assets/sprites/prototype/slime.png" id="2_slime"]
-[ext_resource type="Texture2D" path="res://assets/sprites/prototype/shadow.png" id="3_shadow"]
+[ext_resource type="Texture2D" uid="uid://8ror32bnbyxt" path="res://assets/sprites/prototype/slime.png" id="2_slime"]
+[ext_resource type="Texture2D" uid="uid://fptps7qyp3uq" path="res://assets/sprites/prototype/shadow.png" id="3_shadow"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_srws1"]
 radius = 24.0
@@ -12,8 +12,8 @@ z_index = 20
 script = ExtResource("1_p2gj0")
 
 [node name="Shadow" type="Sprite2D" parent="." unique_id=1220470040]
-position = Vector2(0, 16)
 z_index = -2
+position = Vector2(0, 19)
 scale = Vector2(0.75, 0.65)
 texture = ExtResource("3_shadow")
 

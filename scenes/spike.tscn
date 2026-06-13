@@ -1,21 +1,31 @@
-[gd_scene load_steps=4 format=3 uid="uid://stloe47cargs"]
+[gd_scene format=3 uid="uid://stloe47cargs"]
 
 [ext_resource type="Script" uid="uid://y461c55qwwv" path="res://scripts/spike.gd" id="1_ljd5v"]
+[ext_resource type="Texture2D" uid="uid://fptps7qyp3uq" path="res://assets/sprites/prototype/shadow.png" id="2_d2mqm"]
 [ext_resource type="Texture2D" uid="uid://cwqc8ggl74dwd" path="res://assets/sprites/prototype/spike.png" id="2_spike"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_7a7y0"]
-radius = 34.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7a7y0"]
+radius = 31.0
+height = 88.0
 
 [node name="Spike" type="Area2D" unique_id=651547768]
 z_index = 6
 script = ExtResource("1_ljd5v")
 
+[node name="Shadow" type="Sprite2D" parent="." unique_id=1379330907]
+z_index = -2
+position = Vector2(0, 14.000004)
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("2_d2mqm")
+
 [node name="BodySprite" type="Sprite2D" parent="." unique_id=983968099]
 texture = ExtResource("2_spike")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=882156761]
-position = Vector2(0, 6)
-shape = SubResource("CircleShape2D_7a7y0")
+position = Vector2(0, -2)
+rotation = -1.5707964
+scale = Vector2(0.92000014, 1)
+shape = SubResource("CapsuleShape2D_7a7y0")
 debug_color = Color(0.81732047, 0.08156552, 7.70092e-07, 0.41960785)
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
