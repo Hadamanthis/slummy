@@ -738,3 +738,41 @@ solucao simples e profissional e separar camadas visuais:
 
 O background deve apoiar a leitura do jogo, nao competir com ela. Por isso, o
 centro costuma ser mais calmo, e os detalhes ficam melhor nas bordas.
+
+## 44. Decisao aceitavel precisa virar divida consciente
+
+Durante um prototipo, algumas solucoes sao boas o bastante para testar o fluxo:
+
+- usar `modulate` para simular uma estrela vazia;
+- mostrar 3 estrelas fixas na vitoria antes de existir regra de ranking;
+- deixar uma tela aparecer sem animacao;
+- usar um icone placeholder enquanto a linguagem visual ainda esta mudando.
+
+Isso e diferente de esquecer o problema. A pratica profissional e registrar a
+escolha como temporaria, explicar por que ela e aceitavel agora e mover a
+melhoria para uma sprint futura.
+
+Esse tipo de decisao protege o progresso visivel: o jogo continua avancando,
+mas as melhorias importantes nao somem da memoria do projeto.
+
+## 45. Efeitos temporarios podem precisar de inicializacao explicita
+
+`instantiate()` cria uma cena em memoria, mas ela ainda nao esta na arvore.
+Quando a cena entra na arvore com `add_child`, a Godot chama `_ready()`.
+
+Isso importa para efeitos visuais que precisam receber posicao, cor, escala ou
+outros dados antes de comecar. Se a particula inicia em `_ready()`, ela pode
+emitir antes de estar posicionada corretamente.
+
+Um padrao simples e:
+
+```gdscript
+var effect := EFFECT_SCENE.instantiate()
+parent.add_child(effect)
+effect.global_position = global_position
+effect.play()
+```
+
+Assim, a cena entra na arvore, recebe a posicao correta e so entao inicia o
+efeito. Esse padrao tambem deixa claro que o efeito e temporario e pode se
+destruir sozinho com `queue_free()` quando terminar.

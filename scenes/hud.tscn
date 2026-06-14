@@ -3,20 +3,11 @@
 [ext_resource type="Script" uid="uid://d4fyrunhs7lcq" path="res://scripts/hud.gd" id="1_ahhtf"]
 [ext_resource type="Theme" uid="uid://c0hocmbr3ytj2" path="res://ui/themes/slummy_hud_themes.tres" id="1_oo0fn"]
 [ext_resource type="Texture2D" uid="uid://c5jxjew0aafnh" path="res://assets/sprites/prototype/fruit.png" id="3_5ysmq"]
+[ext_resource type="StyleBox" uid="uid://cih3tei6au6my" path="res://ui/hud_panel_style.tres" id="3_047uy"]
 [ext_resource type="Texture2D" uid="uid://cv20soqti6pta" path="res://assets/sprites/prototype/wall.png" id="4_6fi6k"]
+[ext_resource type="Texture2D" uid="uid://g380swki51c4" path="res://assets/sprites/prototype/star.png" id="5_uo2fv"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oo0fn"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hud_panel"]
-bg_color = Color(0.27504867, 0.4001167, 0.5631024, 0.18039216)
-border_color = Color(0.219608, 0.827451, 0.862745, 0.78)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-shadow_color = Color(0, 0, 0, 0.32)
-shadow_size = 8
-shadow_offset = Vector2(0, 3)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5ysmq"]
 
@@ -102,7 +93,7 @@ vertical_alignment = 1
 [node name="CountsContainer" type="PanelContainer" parent="MarginContainer/LevelContainer/MarginContainer/VBoxContainer" unique_id=556660843]
 layout_mode = 2
 size_flags_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_hud_panel")
+theme_override_styles/panel = ExtResource("3_047uy")
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/LevelContainer/MarginContainer/VBoxContainer/CountsContainer" unique_id=685923052]
 layout_mode = 2
@@ -113,11 +104,13 @@ theme_override_constants/margin_bottom = 12
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/LevelContainer/MarginContainer/VBoxContainer/CountsContainer/MarginContainer" unique_id=1588258875]
 layout_mode = 2
-alignment = 2
+size_flags_horizontal = 4
+alignment = 1
 
 [node name="FruitRow" type="HBoxContainer" parent="MarginContainer/LevelContainer/MarginContainer/VBoxContainer/CountsContainer/MarginContainer/VBoxContainer" unique_id=718975196]
 layout_mode = 2
 theme_override_constants/separation = 15
+alignment = 1
 
 [node name="FruitIcon" type="TextureRect" parent="MarginContainer/LevelContainer/MarginContainer/VBoxContainer/CountsContainer/MarginContainer/VBoxContainer/FruitRow" unique_id=420836616]
 custom_minimum_size = Vector2(32, 32)
@@ -129,19 +122,18 @@ stretch_mode = 5
 [node name="FruitsValue" type="Label" parent="MarginContainer/LevelContainer/MarginContainer/VBoxContainer/CountsContainer/MarginContainer/VBoxContainer/FruitRow" unique_id=493637939]
 unique_name_in_owner = true
 texture_filter = 2
-custom_minimum_size = Vector2(76, 32)
 layout_mode = 2
 theme = ExtResource("1_oo0fn")
 theme_type_variation = &"HUDValue"
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 25
 text = "3/3"
-horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="LaunchesRow" type="HBoxContainer" parent="MarginContainer/LevelContainer/MarginContainer/VBoxContainer/CountsContainer/MarginContainer/VBoxContainer" unique_id=1887048335]
 layout_mode = 2
 theme_override_constants/separation = 15
+alignment = 1
 
 [node name="LaunchIcon" type="TextureRect" parent="MarginContainer/LevelContainer/MarginContainer/VBoxContainer/CountsContainer/MarginContainer/VBoxContainer/LaunchesRow" unique_id=763762780]
 custom_minimum_size = Vector2(32, 32)
@@ -153,14 +145,12 @@ stretch_mode = 5
 [node name="LaunchesLeftValue" type="Label" parent="MarginContainer/LevelContainer/MarginContainer/VBoxContainer/CountsContainer/MarginContainer/VBoxContainer/LaunchesRow" unique_id=1080817766]
 unique_name_in_owner = true
 texture_filter = 2
-custom_minimum_size = Vector2(76, 32)
 layout_mode = 2
 theme = ExtResource("1_oo0fn")
 theme_type_variation = &"HUDValue"
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 25
 text = "3/3"
-horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ScoreContainer" type="PanelContainer" parent="MarginContainer" unique_id=254858777]
@@ -223,13 +213,30 @@ anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_top = -11.5
-offset_bottom = 11.5
+offset_top = -107.0
+offset_bottom = 107.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="ResultLabel" type="Label" parent="ResultContainer" unique_id=1992051406]
+[node name="ResultPanel" type="PanelContainer" parent="ResultContainer" unique_id=35883809]
+custom_minimum_size = Vector2(360, 220)
+layout_mode = 2
+theme_override_styles/panel = ExtResource("3_047uy")
+
+[node name="MarginContainer" type="MarginContainer" parent="ResultContainer/ResultPanel" unique_id=910486265]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 18
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ResultContainer/ResultPanel/MarginContainer" unique_id=1540998090]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="ResultLabel" type="Label" parent="ResultContainer/ResultPanel/MarginContainer/VBoxContainer" unique_id=1992051406]
 unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("1_oo0fn")
@@ -239,3 +246,53 @@ theme_override_colors/font_outline_color = Color(0.0392157, 0.0470588, 0.0784314
 theme_override_constants/outline_size = 6
 theme_override_font_sizes/font_size = 22
 text = "Fase Completa"
+horizontal_alignment = 1
+
+[node name="StarsRow" type="HBoxContainer" parent="ResultContainer/ResultPanel/MarginContainer/VBoxContainer" unique_id=167927320]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="Star1" type="TextureRect" parent="ResultContainer/ResultPanel/MarginContainer/VBoxContainer/StarsRow" unique_id=1159966909]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("5_uo2fv")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Star2" type="TextureRect" parent="ResultContainer/ResultPanel/MarginContainer/VBoxContainer/StarsRow" unique_id=1985450118]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("5_uo2fv")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Star3" type="TextureRect" parent="ResultContainer/ResultPanel/MarginContainer/VBoxContainer/StarsRow" unique_id=191746153]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("5_uo2fv")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="SummaryLabel" type="Label" parent="ResultContainer/ResultPanel/MarginContainer/VBoxContainer" unique_id=683912621]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Score: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HintLabel" type="Label" parent="ResultContainer/ResultPanel/MarginContainer/VBoxContainer" unique_id=854527565]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Tecle Espaço para continuar"
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -634,8 +634,24 @@ legiveis e avaliaveis.
 Status: em andamento. Primeiro passe de HUD implementado com elementos
 sobrepostos, `Level` mais destacado, contador de frutas com icone, contador de
 lancamentos com valor compacto e largura fixa para evitar mudanca de tamanho
-ao atualizar valores. O icone de lancamento ainda e placeholder e deve ser
-substituido depois que o feedback visual da mira/lancamento for melhorado.
+ao atualizar valores. Modal simples de resultado implementado para vitoria e
+falha, com titulo, score, instrucao de continuidade e tres espacos de estrela.
+O icone de lancamento ainda e placeholder e deve ser substituido depois que o
+feedback visual da mira/lancamento for melhorado.
+
+Escolhas aceitaveis por enquanto:
+
+- estrelas usam a mesma textura com `modulate` para representar cheia/vazia;
+- vitoria mostra temporariamente 3 estrelas e falha mostra 0 estrelas;
+- o modal nao tem animacao de entrada/saida ainda;
+- o comando de continuar/reiniciar permanece no `ui_accept`, sem botao visual;
+- `HUD` apresenta resultado, enquanto `Main` continua decidindo fluxo e regra.
+- o slime pode usar squash/stretch exagerado, pois a identidade do personagem
+  justifica uma deformacao mais elastica e cartunesca.
+- a fruta usa pulso continuo via `AnimationPlayer` e um pop simples de coleta
+  via `Tween`; o efeito funciona, mas ainda e placeholder visual.
+- `FruitCollectedEffect` e uma cena temporaria separada, posicionada pela fruta
+  antes de iniciar as particulas para evitar emissao na origem do mundo.
 
 Pendencias atuais:
 
@@ -644,8 +660,14 @@ Pendencias atuais:
 - criar um icone proprio para pontuacao se ela permanecer como informacao
   principal;
 - criar/substituir o icone de lancamento depois do visual da mira/lancamento;
-- usar estrelas no modal de resultado para ranking da fase;
-- criar modal de resultado com estrelas para vitoria/falha.
+- definir regra real de estrelas por desempenho da fase;
+- trocar estrela vazia por asset proprio ou shader/material se o `modulate`
+  nao ficar legivel o bastante;
+- melhorar o efeito de coleta da fruta com particulas, brilho ou timing mais
+  refinado;
+- trocar dependencia estrutural `get_parent().get_parent()` por um ponto de
+  spawn de efeitos mais explicito quando houver mais efeitos temporarios;
+- adicionar transicao/animacao simples no modal durante uma sprint de juice.
 
 ## Sprint 11 - Ajuste de feel sem polimento pesado
 

@@ -7,20 +7,63 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_5o7rl"]
 radius = 22.0
 
+[sub_resource type="Animation" id="Animation_t2alg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VisualRoot:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_64keg"]
+resource_name = "idle_pulse"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VisualRoot:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.08, 1.08), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8d2he"]
+_data = {
+&"RESET": SubResource("Animation_t2alg"),
+&"idle_pulse": SubResource("Animation_64keg")
+}
+
 [node name="Fruit" type="Area2D" unique_id=1137598225]
 z_index = 10
 script = ExtResource("1_yvtr8")
 
-[node name="Shadow" type="Sprite2D" parent="." unique_id=1128934357]
+[node name="VisualRoot" type="Node2D" parent="." unique_id=1447691121]
+
+[node name="Shadow" type="Sprite2D" parent="VisualRoot" unique_id=1128934357]
 z_index = -2
 position = Vector2(0, 18)
 scale = Vector2(0.58, 0.45)
 texture = ExtResource("3_shadow")
 
-[node name="BodySprite" type="Sprite2D" parent="." unique_id=1633461225]
+[node name="BodySprite" type="Sprite2D" parent="VisualRoot" unique_id=1633461225]
 texture = ExtResource("2_fruit")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2091466532]
+[node name="CollisionShape" type="CollisionShape2D" parent="." unique_id=2091466532]
 shape = SubResource("CircleShape2D_5o7rl")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1330423336]
+libraries/ = SubResource("AnimationLibrary_8d2he")
+autoplay = &"idle_pulse"
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -11,18 +11,46 @@ radius = 24.0
 z_index = 20
 script = ExtResource("1_p2gj0")
 
-[node name="Shadow" type="Sprite2D" parent="." unique_id=1220470040]
+[node name="CollisionShape" type="CollisionShape2D" parent="." unique_id=1807762981]
+shape = SubResource("CircleShape2D_srws1")
+
+[node name="VisualRoot" type="Node2D" parent="." unique_id=13559691]
+z_index = 2
+
+[node name="Shadow" type="Sprite2D" parent="VisualRoot" unique_id=1220470040]
 z_index = -2
 position = Vector2(0, 19)
 scale = Vector2(0.75, 0.65)
 texture = ExtResource("3_shadow")
 
-[node name="BodySprite" type="Sprite2D" parent="." unique_id=1008625166]
+[node name="BodySprite" type="Sprite2D" parent="VisualRoot" unique_id=1008625166]
+unique_name_in_owner = true
 texture = ExtResource("2_slime")
 
-[node name="CollisionShape" type="CollisionShape2D" parent="." unique_id=1807762981]
-shape = SubResource("CircleShape2D_srws1")
+[node name="Aim" type="Node2D" parent="." unique_id=630514436]
+unique_name_in_owner = true
 
-[node name="Line2D" type="Line2D" parent="." unique_id=642533357]
-z_index = 30
-width = 3.0
+[node name="AimFill" type="Line2D" parent="Aim" unique_id=642533357]
+unique_name_in_owner = true
+position = Vector2(0, -1.9073486e-06)
+width = 32.0
+default_color = Color(0.34901962, 1, 1, 0.3372549)
+antialiased = true
+
+[node name="AimRailLeft" type="Line2D" parent="Aim" unique_id=270883179]
+unique_name_in_owner = true
+z_index = 1
+width = 2.0
+default_color = Color(0, 0.54820585, 0.5494751, 1)
+begin_cap_mode = 2
+end_cap_mode = 1
+antialiased = true
+
+[node name="AimRailRight" type="Line2D" parent="Aim" unique_id=1260685084]
+unique_name_in_owner = true
+z_index = 1
+width = 2.0
+default_color = Color(0, 0.54820585, 0.5494751, 1)
+begin_cap_mode = 2
+end_cap_mode = 1
+antialiased = true

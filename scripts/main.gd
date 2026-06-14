@@ -91,7 +91,10 @@ func stage_failed() -> void:
 	
 	state = State.STAGE_FAILED
 	slime.set_active(false)
-	hud.show_result("Fase %s Falhou" % current_level_number)
+	var result = "Fase %s Falhou" % current_level_number
+	var summary = "Score: %s" % current_level_score
+	hud.set_stars(0)
+	hud.show_result(result, summary)
 	_update_hud()
 
 func stage_cleared() -> void:
@@ -100,7 +103,10 @@ func stage_cleared() -> void:
 	
 	state = State.STAGE_CLEARED
 	slime.set_active(false)
-	hud.show_result("Fase %s Completa" % current_level_number)
+	var result = "Fase %s Completa" % current_level_number
+	var summary = "Score: %s" % current_level_score
+	hud.set_stars(3)
+	hud.show_result(result, summary)
 	_update_hud()
 
 func _update_hud() -> void:
