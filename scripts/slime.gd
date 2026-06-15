@@ -93,10 +93,9 @@ func _update_aim_line() -> void:
 	var clamped_vector := launch_vector.limit_length(max_drag_distance)
 	var direction := clamped_vector.normalized()
 	var normal := direction.rotated(PI / 2.0)
-	var force_ratio := clamped_vector.length() / max_drag_distance
 	
 	_clear_aim()
-	aim.visible = true
+	
 	
 	aim_rail_left.add_point(normal * rail_offset)
 	aim_rail_left.add_point(clamped_vector + normal * rail_offset)
@@ -106,8 +105,8 @@ func _update_aim_line() -> void:
 	
 	aim_fill.add_point(Vector2.ZERO)
 	aim_fill.add_point(clamped_vector)
-	#aim_fill.width = lerp(3.0, 8.0, force_ratio)
-	#aim_fill.default_color = aim_weak_color.lerp(aim_strong_color, force_ratio)
+	
+	aim.visible = true
 
 func _try_launch() -> void:
 	if state != State.AIMING:

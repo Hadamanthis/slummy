@@ -3,9 +3,16 @@
 [ext_resource type="Script" uid="uid://dr7t2rnkky315" path="res://scripts/slime.gd" id="1_p2gj0"]
 [ext_resource type="Texture2D" uid="uid://8ror32bnbyxt" path="res://assets/sprites/prototype/slime.png" id="2_slime"]
 [ext_resource type="Texture2D" uid="uid://fptps7qyp3uq" path="res://assets/sprites/prototype/shadow.png" id="3_shadow"]
+[ext_resource type="Shader" uid="uid://bsgk3jns1c46g" path="res://material/aim_fill_mystic.gdshader" id="4_pjw23"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_srws1"]
 radius = 24.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pjw23"]
+shader = ExtResource("4_pjw23")
+shader_parameter/core_color = Color(0, 0.85882354, 0.87058824, 0.8980392)
+shader_parameter/edge_color = Color(0, 0.8509804, 1, 0.46666667)
+shader_parameter/pulse_speed = 2.0
 
 [node name="Slime" type="CharacterBody2D" unique_id=177085480]
 z_index = 20
@@ -32,9 +39,10 @@ unique_name_in_owner = true
 
 [node name="AimFill" type="Line2D" parent="Aim" unique_id=642533357]
 unique_name_in_owner = true
+material = SubResource("ShaderMaterial_pjw23")
 position = Vector2(0, -1.9073486e-06)
 width = 32.0
-default_color = Color(0.34901962, 1, 1, 0.3372549)
+default_color = Color(0.34901962, 1, 1, 0.3647059)
 antialiased = true
 
 [node name="AimRailLeft" type="Line2D" parent="Aim" unique_id=270883179]
