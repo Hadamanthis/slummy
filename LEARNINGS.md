@@ -776,3 +776,49 @@ effect.play()
 Assim, a cena entra na arvore, recebe a posicao correta e so entao inicia o
 efeito. Esse padrao tambem deixa claro que o efeito e temporario e pode se
 destruir sozinho com `queue_free()` quando terminar.
+
+## 46. Textura e shader tem papeis diferentes
+
+Uma textura e uma imagem usada como base visual. No caso da mira, uma faixa
+horizontal com rajadas e transparencia ajuda a linha deixar de parecer um
+desenho tecnico.
+
+Um shader transforma como essa imagem e desenhada. Ele pode mudar cor, brilho,
+alpha e coordenadas UV ao longo do tempo. Ao deslocar `UV.x` com `TIME`, a
+mesma textura parece se mover pela linha:
+
+```glsl
+vec2 moving_uv = UV;
+moving_uv.x -= TIME * flow_speed;
+vec4 streak = texture(TEXTURE, moving_uv);
+```
+
+Principio pratico:
+
+- textura define o desenho base;
+- shader da vida ao desenho;
+- `UV.x` costuma representar o comprimento da linha;
+- `UV.y` costuma representar a espessura da linha;
+- `TIME` cria movimento continuo sem precisar alterar a cena por script.
+
+Esse padrao e util para mira, lasers, trilhas, escudos, portais, areas de
+efeito e interfaces com energia.
+
+## 47. Arquivo-fonte de arte nao e necessariamente asset de jogo
+
+Uma imagem em `_sources` pode servir como base de trabalho, referencia ou
+arquivo de alta resolucao, mas ainda nao estar pronta para uso direto no jogo.
+
+Exemplos de diferenca:
+
+- fonte: imagem grande, com fundo de recorte, camadas implicitas ou detalhes
+  demais;
+- asset final: PNG no tamanho certo, fundo transparente, boa leitura em escala
+  real, importado e referenciado por uma cena.
+
+No caso de um efeito como slime sendo puxado, a fonte pode ter fundo magenta ou
+resolucao alta. Antes de integrar, ela precisa virar uma textura limpa em
+`assets/sprites/effects/` ou `assets/sprites/prototype/`, dependendo do uso.
+
+Principio: guardar a fonte e bom, mas o jogo deve referenciar assets finais
+preparados para runtime.

@@ -4,8 +4,8 @@
 [ext_resource type="Theme" uid="uid://c0hocmbr3ytj2" path="res://ui/themes/slummy_hud_themes.tres" id="1_oo0fn"]
 [ext_resource type="Texture2D" uid="uid://c5jxjew0aafnh" path="res://assets/sprites/prototype/fruit.png" id="3_5ysmq"]
 [ext_resource type="StyleBox" uid="uid://cih3tei6au6my" path="res://ui/hud_panel_style.tres" id="3_047uy"]
-[ext_resource type="Texture2D" uid="uid://cv20soqti6pta" path="res://assets/sprites/prototype/wall.png" id="4_6fi6k"]
 [ext_resource type="Texture2D" uid="uid://g380swki51c4" path="res://assets/sprites/prototype/star.png" id="5_uo2fv"]
+[ext_resource type="Texture2D" uid="uid://0uox275e6a00" path="res://assets/sprites/ui/launch_icon.png" id="6_launch"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oo0fn"]
 
@@ -138,9 +138,10 @@ alignment = 1
 [node name="LaunchIcon" type="TextureRect" parent="MarginContainer/LevelContainer/MarginContainer/VBoxContainer/CountsContainer/MarginContainer/VBoxContainer/LaunchesRow" unique_id=763762780]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
-texture = ExtResource("4_6fi6k")
+texture = ExtResource("6_launch")
 expand_mode = 2
 stretch_mode = 5
+flip_h = true
 
 [node name="LaunchesLeftValue" type="Label" parent="MarginContainer/LevelContainer/MarginContainer/VBoxContainer/CountsContainer/MarginContainer/VBoxContainer/LaunchesRow" unique_id=1080817766]
 unique_name_in_owner = true

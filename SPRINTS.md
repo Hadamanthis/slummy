@@ -652,6 +652,17 @@ Escolhas aceitaveis por enquanto:
   via `Tween`; o efeito funciona, mas ainda e placeholder visual.
 - `FruitCollectedEffect` e uma cena temporaria separada, posicionada pela fruta
   antes de iniciar as particulas para evitar emissao na origem do mundo.
+- a mira usa duas linhas laterais, preenchimento texturizado e shader simples
+  para simular energia fluindo durante o arrasto.
+- a particula de coleta da fruta foi ajustada para explodir principalmente
+  para cima, com cone mais fechado.
+- o espinho recebeu `DangerPulse` com textura propria e `AnimationPlayer` para
+  comunicar area de perigo.
+- o slime recebeu um primeiro `AnimationPlayer` de idle e uma funcao inicial
+  de feedback de coleta, ainda incompleta.
+- `assets/sprites/_sources/slime_launch.png` foi criado como fonte visual para
+  futura representacao do slime sendo puxado; ainda precisa virar asset final
+  integrado ao jogo.
 
 Pendencias atuais:
 
@@ -659,7 +670,7 @@ Pendencias atuais:
   apenas no resultado da fase;
 - criar um icone proprio para pontuacao se ela permanecer como informacao
   principal;
-- criar/substituir o icone de lancamento depois do visual da mira/lancamento;
+- revisar se o icone de lancamento combina com a nova linguagem visual da mira;
 - definir regra real de estrelas por desempenho da fase;
 - trocar estrela vazia por asset proprio ou shader/material se o `modulate`
   nao ficar legivel o bastante;
@@ -668,6 +679,20 @@ Pendencias atuais:
 - trocar dependencia estrutural `get_parent().get_parent()` por um ponto de
   spawn de efeitos mais explicito quando houver mais efeitos temporarios;
 - adicionar transicao/animacao simples no modal durante uma sprint de juice.
+- transformar `slime_launch.png` em asset jogavel sem fundo magenta e integrar
+  no estado `AIMING`;
+- concluir feedback do slime ao coletar fruta;
+- criar feedback de morte do slime ao tocar espinho;
+- testar iluminacao 2D em uma frente separada, sem misturar com a conclusao
+  dos efeitos atuais.
+
+Pausa do projeto:
+
+- Ultimo checkpoint antes da pausa: pacote inicial de UI/juice em andamento,
+  com HUD melhorada, modal simples, mira texturizada/animada, feedback de
+  slime, fruta e espinho parcialmente implementados.
+- Ao retomar, revisar primeiro o estado visual no editor e testar o fluxo
+  completo antes de adicionar novos efeitos.
 
 ## Sprint 11 - Ajuste de feel sem polimento pesado
 

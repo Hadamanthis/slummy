@@ -36,6 +36,7 @@ var aim_strong_color := Color(1.0, 0.35, 0.15, 1.0)
 var rail_offset := 16.0
 
 var squash_tween: Tween
+var collected_feedback_tween: Tween
 
 func _ready() -> void:
 	aim_fill.visible = false
@@ -167,3 +168,13 @@ func _play_squash(target_scale: Vector2) -> void:
 	squash_tween = create_tween()
 	squash_tween.tween_property(visual_root, "scale", target_scale, 0.10)
 	squash_tween.tween_property(visual_root, "scale", Vector2.ONE, 0.20)
+
+func play_collect_feedback() -> void:
+	if collected_feedback_tween:
+		collected_feedback_tween.kill()
+
+	_play_squash(Vector2(1.2, 1.2))
+
+	# particula
+
+	# leve brilho/flash

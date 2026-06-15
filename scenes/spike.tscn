@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://stloe47cargs"]
 
 [ext_resource type="Script" uid="uid://y461c55qwwv" path="res://scripts/spike.gd" id="1_ljd5v"]
+[ext_resource type="Texture2D" uid="uid://yowl7rf31gu1" path="res://assets/sprites/effects/danger_pulse_ring.png" id="2_cx2lw"]
 [ext_resource type="Texture2D" uid="uid://fptps7qyp3uq" path="res://assets/sprites/prototype/shadow.png" id="2_d2mqm"]
 [ext_resource type="Texture2D" uid="uid://cwqc8ggl74dwd" path="res://assets/sprites/prototype/spike.png" id="2_spike"]
 
@@ -8,24 +9,74 @@
 radius = 31.0
 height = 88.0
 
+[sub_resource type="Animation" id="Animation_d2mqm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DangerPulse:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1.4, 1.4)]
+}
+
+[sub_resource type="Animation" id="Animation_cx2lw"]
+resource_name = "danger_pulse"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DangerPulse:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.3, 0.3), Vector2(0.5, 0.5), Vector2(0.3, 0.3)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_60m7a"]
+_data = {
+&"RESET": SubResource("Animation_d2mqm"),
+&"danger_pulse": SubResource("Animation_cx2lw")
+}
+
 [node name="Spike" type="Area2D" unique_id=651547768]
 z_index = 6
 script = ExtResource("1_ljd5v")
 
-[node name="Shadow" type="Sprite2D" parent="." unique_id=1379330907]
+[node name="DangerPulse" type="Sprite2D" parent="." unique_id=1146209653]
+modulate = Color(1, 0.05490196, 0.078431375, 1)
+position = Vector2(0, 18)
+scale = Vector2(1.4, 1.4)
+texture = ExtResource("2_cx2lw")
+
+[node name="VisualRoot" type="Node2D" parent="." unique_id=593519673]
+
+[node name="Shadow" type="Sprite2D" parent="VisualRoot" unique_id=1379330907]
 z_index = -2
 position = Vector2(0, 14.000004)
 scale = Vector2(1.2, 1.2)
 texture = ExtResource("2_d2mqm")
 
-[node name="BodySprite" type="Sprite2D" parent="." unique_id=983968099]
+[node name="BodySprite" type="Sprite2D" parent="VisualRoot" unique_id=983968099]
 texture = ExtResource("2_spike")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=882156761]
+visible = false
 position = Vector2(0, -2)
 rotation = -1.5707964
 scale = Vector2(0.92000014, 1)
 shape = SubResource("CapsuleShape2D_7a7y0")
 debug_color = Color(0.81732047, 0.08156552, 7.70092e-07, 0.41960785)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1053103772]
+libraries/ = SubResource("AnimationLibrary_60m7a")
+autoplay = &"danger_pulse"
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
